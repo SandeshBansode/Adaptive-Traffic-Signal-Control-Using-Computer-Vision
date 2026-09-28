@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <vType id="car" accel="2.6" decel="4.5" length="4.5" minGap="2.0" maxSpeed="13.9" sigma="0.5"/>
+    <route id="route_lane1" edges="north_in center_out_south"/>
+    <flow id="flow_lane1" type="car" route="route_lane1" begin="0" end="1800" vehsPerHour="315.7"/>
+    <route id="route_lane2" edges="east_in center_out_west"/>
+    <flow id="flow_lane2" type="car" route="route_lane2" begin="0" end="1800" vehsPerHour="562.7"/>
+    <route id="route_lane3" edges="south_in center_out_north"/>
+    <flow id="flow_lane3" type="car" route="route_lane3" begin="0" end="1800" vehsPerHour="164.7"/>
+    <route id="route_lane4" edges="west_in center_out_east"/>
+    <flow id="flow_lane4" type="car" route="route_lane4" begin="0" end="1800" vehsPerHour="356.9"/>
+</routes>

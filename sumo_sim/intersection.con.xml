@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connections>
+    <connection from="north_in" to="center_out_south"/>
+    <connection from="south_in" to="center_out_north"/>
+    <connection from="east_in"  to="center_out_west"/>
+    <connection from="west_in"  to="center_out_east"/>
+</connections>

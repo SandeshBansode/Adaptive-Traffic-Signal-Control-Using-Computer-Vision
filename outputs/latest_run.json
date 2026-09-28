@@ -1,0 +1,64 @@
+{
+  "timestamp": 1790406517.961312,
+  "labels": [
+    "Lane 1",
+    "Lane 2",
+    "Lane 3",
+    "Lane 4"
+  ],
+  "vehicle_counts": [
+    23,
+    41,
+    12,
+    26
+  ],
+  "emergency_flags": [
+    false,
+    false,
+    false,
+    false
+  ],
+  "plan": [
+    {
+      "count": 23,
+      "backlog_in": 0.0,
+      "demand": 23.0,
+      "green": 46.0,
+      "served": 23.0,
+      "leftover": 0.0,
+      "cycles_waited": 0,
+      "emergency": false
+    },
+    {
+      "count": 41,
+      "backlog_in": 11.0,
+      "demand": 52.0,
+      "green": 75,
+      "served": 37.5,
+      "leftover": 14.5,
+      "cycles_waited": 2,
+      "emergency": false
+    },
+    {
+      "count": 12,
+      "backlog_in": 0.0,
+      "demand": 12.0,
+      "green": 24.0,
+      "served": 12.0,
+      "leftover": 0.0,
+      "cycles_waited": 0,
+      "emergency": false
+    },
+    {
+      "count": 26,
+      "backlog_in": 0.0,
+      "demand": 26.0,
+      "green": 52.0,
+      "served": 26.0,
+      "leftover": 0.0,
+      "cycles_waited": 0,
+      "emergency": false
+    }
+  ],
+  "total_cycle_time": 197.0
+}
