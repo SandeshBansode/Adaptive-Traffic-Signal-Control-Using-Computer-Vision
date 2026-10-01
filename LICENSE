@@ -1,21 +1,39 @@
-MIT License
+Copyright (c) 2026 Sandesh Bansode. All Rights Reserved.
 
-Copyright (c) 2020 4Tron
+PROPRIETARY SOFTWARE LICENSE
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This repository and all source code, documentation, assets, and other
+original materials contained within it are the intellectual property of
+Sandesh Bansode, unless otherwise stated.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The repository may be publicly viewed for educational, evaluation,
+portfolio, and recruitment purposes.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+No permission is granted to any person or organization to:
+
+1. Copy, reproduce, or duplicate any part of this project.
+2. Redistribute, publish, or republish the source code or any substantial
+   portion of it.
+3. Modify, adapt, or create derivative works for redistribution or
+   publication.
+4. Use this project or any substantial portion of it for commercial
+   purposes.
+5. Claim authorship or ownership of this project or any portion of it.
+6. Incorporate substantial portions of this project into another project,
+   product, or service without prior written permission.
+7. Use this project for any purpose beyond viewing and evaluation without
+   prior written permission from the copyright holder.
+
+Viewing, cloning, or accessing this public repository does not grant any
+license or ownership rights to the source code.
+
+Any use beyond the permissions explicitly stated above requires prior
+written permission from Sandesh Bansode.
+
+Third-party libraries, frameworks, models, datasets, or other materials
+included or referenced by this project remain subject to their respective
+licenses and terms. This notice applies only to original materials owned
+by Sandesh Bansode.
+
+THE SOFTWARE AND MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, TO THE MAXIMUM EXTENT PERMITTED BY LAW.
