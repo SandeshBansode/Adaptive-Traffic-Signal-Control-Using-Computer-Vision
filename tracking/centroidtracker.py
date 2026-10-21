@@ -134,30 +134,27 @@ class CentroidTracker:
 			unusedRows = set(range(0, D.shape[0])).difference(usedRows)
 			unusedCols = set(range(0, D.shape[1])).difference(usedCols)
 
-			# in the event that the number of object centroids is
-			# equal or greater than the number of input centroids
-			# we need to check and see if some of these objects have
-			# potentially disappeared
-			if D.shape[0] >= D.shape[1]:
-				# loop over the unused row indexes
-				for row in unusedRows:
-					# grab the object ID for the corresponding row
-					# index and increment the disappeared counter
-					objectID = objectIDs[row]
-					self.disappeared[objectID] += 1
+			# any unmatched existing object has potentially disappeared.
+			# This must run regardless of the row/column counts: with
+			# maxDistance, a match can be rejected even when there are
+			# more inputs than objects
+			for row in unusedRows:
+				# grab the object ID for the corresponding row
+				# index and increment the disappeared counter
+				objectID = objectIDs[row]
+				self.disappeared[objectID] += 1
 
-					# check to see if the number of consecutive
-					# frames the object has been marked "disappeared"
-					# for warrants deregistering the object
-					if self.disappeared[objectID] > self.maxDisappeared:
-						self.deregister(objectID)
+				# check to see if the number of consecutive
+				# frames the object has been marked "disappeared"
+				# for warrants deregistering the object
+				if self.disappeared[objectID] > self.maxDisappeared:
+					self.deregister(objectID)
 
-			# otherwise, if the number of input centroids is greater
-			# than the number of existing object centroids we need to
-			# register each new input centroid as a trackable object
-			else:
-				for col in unusedCols:
-					self.register(inputCentroids[col])
+			# likewise, any unmatched input centroid is a new object and
+			# must be registered - otherwise a vehicle entering while
+			# another is still being tracked would never be counted
+			for col in unusedCols:
+				self.register(inputCentroids[col])
 
 		# return the set of trackable objects
 		return self.objects

@@ -254,11 +254,18 @@ cd Adaptive-Traffic-Signal-Control-Using-Computer-Vision
 ### 2. Install dependencies
 
 ```bash
-pip install opencv-python numpy scipy matplotlib streamlit pandas
+pip install -r requirements.txt
 ```
 
-For SUMO validation, install the SUMO/TraCI dependencies required by your
-environment.
+This includes SUMO/TraCI (`eclipse-sumo`, `traci`) for the SUMO validation.
+OpenCV is pinned to 4.x because OpenCV 5 removed the Darknet importer that
+YOLOv4-tiny needs.
+
+Run the test suite with:
+
+```bash
+python -m pytest
+```
 
 ### 3. Run live detection
 
@@ -314,7 +321,9 @@ Adaptive-Traffic-Signal-Control-Using-Computer-Vision/
 │
 ├── detect_and_signal.py       # Main computer-vision pipeline
 ├── emergency.py               # Emergency vehicle heuristic
-├── test_emergency.py          # Emergency detection test
+├── test_emergency.py          # Emergency detection tests
+├── test_signal_plan.py        # Signal-timing model tests
+├── test_tracker.py            # Centroid tracker tests
 ├── simulate_comparison.py     # Fixed vs adaptive simulation
 ├── dashboard.py               # Streamlit dashboard
 │

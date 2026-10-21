@@ -46,6 +46,12 @@ def load_class_names():
 
 
 def load_network():
+    if not hasattr(cv2.dnn, "readNetFromDarknet"):
+        # OpenCV 5 removed the Darknet importer that YOLOv4-tiny needs.
+        raise SystemExit(
+            "OpenCV {} cannot load Darknet (YOLO .cfg/.weights) models. "
+            "Install OpenCV 4.x: pip install \"opencv-python>=4.5.4,<5\"".format(cv2.__version__)
+        )
     net = cv2.dnn.readNetFromDarknet(CFG_PATH, WEIGHTS_PATH)
     net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
     net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
@@ -169,7 +175,10 @@ def render_lane_tile(state, net, output_layers, class_names):
 
         state.trackable_objects[object_id] = to
 
-        rect = nearest_rect(centroid)
+        # Only sample colors for objects matched to a box this frame - a
+        # tracked-but-unseen object's "nearest" box belongs to some other
+        # vehicle, and would pollute this object's flash history.
+        rect = nearest_rect(centroid) if state.ct.disappeared.get(object_id, 0) == 0 else None
         is_emergency = False
         if rect is not None:
             sx, sy, ex, ey = rect
@@ -184,6 +193,13 @@ def render_lane_tile(state, net, output_layers, class_names):
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 255), 2)
 
         cv2.circle(tile, (int(centroid[0]), int(centroid[1])), 3, BOX_COLOR, -1)
+
+    # Drop per-object state for vehicles the tracker has deregistered so
+    # it doesn't grow without bound over a long run.
+    for object_id in list(state.trackable_objects):
+        if object_id not in objects:
+            del state.trackable_objects[object_id]
+            state.emergency.forget(object_id)
 
     if state.emergency_ever_detected:
         cv2.putText(tile, "!! EMERGENCY VEHICLE - PREEMPTING SIGNAL !!", (8, TILE_HEIGHT - 12),
@@ -263,7 +279,8 @@ def run_combined(video_paths, labels, net, output_layers, class_names,
         if key == ord('q'):
             break
         elif key == ord('p'):
-            cv2.waitKey(0)
+            if cv2.waitKey(0) & 0xFF == ord('q'):
+                break
 
     for lane in lanes:
         if lane.cap is not None:

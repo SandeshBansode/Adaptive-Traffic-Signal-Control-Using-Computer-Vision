@@ -21,6 +21,7 @@ import os
 import sys
 import argparse
 import json
+import shutil
 import xml.etree.ElementTree as ET
 
 try:
@@ -60,8 +61,7 @@ def run(mode, use_gui=False):
     tripinfo_path = os.path.join(OUTPUTS_DIR, "sumo_tripinfo_{}.xml".format(mode))
     os.makedirs(OUTPUTS_DIR, exist_ok=True)
 
-    binary = "sumo-gui" if use_gui else "sumo"
-    sumo_binary = os.path.join(SUMO_HOME, "bin", binary + ".exe")
+    sumo_binary = _find_sumo_binary("sumo-gui" if use_gui else "sumo")
 
     traci.start([
         sumo_binary, "-c", SUMOCFG_PATH,
@@ -82,7 +82,12 @@ def run(mode, use_gui=False):
         ]
 
         if mode == "adaptive":
-            plan, backlog, cycles_waited = compute_signal_plan(queue_counts, backlog, cycles_waited)
+            # The halting count is a live measurement of the whole queue,
+            # so it already contains every vehicle left over from the
+            # previous cycle. Feeding the computed backlog back in as well
+            # would count those vehicles twice - only the aging state
+            # (cycles_waited) carries across cycles here.
+            plan, backlog, cycles_waited = compute_signal_plan(queue_counts, [0.0] * 4, cycles_waited)
             greens = [p["green"] for p in plan]
         else:
             # naive fixed-timer baseline: same round-robin phase order,
@@ -124,6 +129,22 @@ def run(mode, use_gui=False):
     stats["mode"] = mode
     stats["cycle_log"] = cycle_log
     return stats
+
+
+def _find_sumo_binary(name):
+    # SUMO ships "sumo.exe" on Windows and a plain "sumo" elsewhere
+    candidates = []
+    if SUMO_HOME:
+        candidates += [os.path.join(SUMO_HOME, "bin", name + ".exe"),
+                       os.path.join(SUMO_HOME, "bin", name)]
+    for path in candidates:
+        if os.path.isfile(path):
+            return path
+    found = shutil.which(name)
+    if found:
+        return found
+    sys.exit("Could not find the '{}' binary. Install SUMO (e.g. `pip install eclipse-sumo`) "
+             "or set SUMO_HOME.".format(name))
 
 
 def _advance(seconds):
