@@ -1,816 +1,6872 @@
 {
   "fixed": {
     "completed_trips": 702,
-    "avg_waiting_time": 131.6196581196581,
-    "avg_duration": 256.25071225071224,
-    "avg_time_loss": 166.45699430199429,
+    "avg_waiting_time": 11.793447293447294,
+    "avg_duration": 114.32051282051282,
+    "avg_time_loss": 24.539686609686623,
     "mode": "fixed",
-    "cycle_log": [
+    "sim_seconds": 1922,
+    "green_phases": 54,
+    "phase_log": [
       {
-        "cycle": 0,
-        "queue_counts": [
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1.0,
+        "queue_at_start": 0,
+        "lane_queues": [
+          0,
+          0
+        ],
+        "waited": 0.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 37.0,
+        "queue_at_start": 0,
+        "lane_queues": [
+          0,
+          0
+        ],
+        "waited": 0.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 73.0,
+        "queue_at_start": 4,
+        "lane_queues": [
+          4,
+          1
+        ],
+        "waited": 35.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 109.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          4
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 145.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          2
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 181.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          5
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 217.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          2
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 253.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          5
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 289.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          1
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 325.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          6
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 361.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          1
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 397.0,
+        "queue_at_start": 7,
+        "lane_queues": [
+          7,
+          4
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 4
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 433.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          1
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 469.0,
+        "queue_at_start": 11,
+        "lane_queues": [
+          11,
+          5
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 505.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          1
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 541.0,
+        "queue_at_start": 7,
+        "lane_queues": [
+          7,
+          5
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 577.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          2
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 613.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          5
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 649.0,
+        "queue_at_start": 4,
+        "lane_queues": [
+          4,
+          2
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 685.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          5
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 721.0,
+        "queue_at_start": 4,
+        "lane_queues": [
+          4,
+          2
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 757.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          6
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 793.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          2
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 829.0,
+        "queue_at_start": 9,
+        "lane_queues": [
+          9,
+          6
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 865.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          1
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 901.0,
+        "queue_at_start": 7,
+        "lane_queues": [
+          7,
+          4
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 937.0,
+        "queue_at_start": 4,
+        "lane_queues": [
+          4,
+          1
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 973.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          5
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1009.0,
+        "queue_at_start": 4,
+        "lane_queues": [
+          4,
+          2
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1045.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          5
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1081.0,
+        "queue_at_start": 4,
+        "lane_queues": [
+          4,
+          2
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1117.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          5
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1153.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1189.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          5
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1225.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          1
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1261.0,
+        "queue_at_start": 9,
+        "lane_queues": [
+          9,
+          4
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1297.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          1
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1333.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          4
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1369.0,
+        "queue_at_start": 4,
+        "lane_queues": [
+          4,
+          1
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1405.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          4
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1441.0,
+        "queue_at_start": 4,
+        "lane_queues": [
+          4,
+          2
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1477.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          5
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1513.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          2
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1549.0,
+        "queue_at_start": 9,
+        "lane_queues": [
+          9,
+          5
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1585.0,
+        "queue_at_start": 4,
+        "lane_queues": [
+          4,
+          2
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1621.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          5
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1657.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          1
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1693.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          4
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1729.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          1
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1765.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          4
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1801.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          2
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1837.0,
+        "queue_at_start": 8,
+        "lane_queues": [
+          8,
+          5
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1873.0,
+        "queue_at_start": 1,
+        "lane_queues": [
+          1,
+          1
+        ],
+        "waited": 38.0,
+        "planned": 30,
+        "green": 30.0,
+        "end_reason": "timer",
+        "choice": "rotation",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1909.0,
+        "queue_at_start": 0,
+        "lane_queues": [
+          0,
+          0
+        ],
+        "waited": 0.0,
+        "planned": 30,
+        "green": null,
+        "end_reason": null,
+        "choice": "rotation",
+        "emergency": false
+      }
+    ],
+    "queue_log": [
+      {
+        "t": 0,
+        "queues": [
           0,
           0,
           0,
           0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
         ]
       },
       {
-        "cycle": 1,
-        "queue_counts": [
-          8,
-          12,
-          1,
+        "t": 10,
+        "queues": [
+          0,
+          0,
+          0,
           0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
         ]
       },
       {
-        "cycle": 2,
-        "queue_counts": [
-          9,
-          17,
-          1,
+        "t": 20,
+        "queues": [
+          0,
+          0,
+          0,
           0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
         ]
       },
       {
-        "cycle": 3,
-        "queue_counts": [
-          9,
-          22,
-          1,
+        "t": 30,
+        "queues": [
+          0,
+          0,
+          0,
           0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
         ]
       },
       {
-        "cycle": 4,
-        "queue_counts": [
-          8,
-          27,
+        "t": 40,
+        "queues": [
           1,
-          0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
-        ]
-      },
-      {
-        "cycle": 5,
-        "queue_counts": [
-          9,
-          32,
+          0,
           1,
-          0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
+          1
         ]
       },
       {
-        "cycle": 6,
-        "queue_counts": [
-          9,
-          37,
+        "t": 50,
+        "queues": [
           1,
-          0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
-        ]
-      },
-      {
-        "cycle": 7,
-        "queue_counts": [
-          8,
-          41,
           1,
-          0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
+          1,
+          1
         ]
       },
       {
-        "cycle": 8,
-        "queue_counts": [
-          9,
-          42,
+        "t": 60,
+        "queues": [
           2,
-          0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
-        ]
-      },
-      {
-        "cycle": 9,
-        "queue_counts": [
-          9,
-          43,
           2,
-          0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
+          1,
+          1
         ]
       },
       {
-        "cycle": 10,
-        "queue_counts": [
-          9,
-          43,
+        "t": 70,
+        "queues": [
+          4,
+          2,
           1,
           0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
         ]
       },
       {
-        "cycle": 11,
-        "queue_counts": [
+        "t": 80,
+        "queues": [
+          1,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 90,
+        "queues": [
+          1,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 100,
+        "queues": [
+          0,
+          6,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 110,
+        "queues": [
+          1,
+          7,
+          1,
+          3
+        ]
+      },
+      {
+        "t": 120,
+        "queues": [
+          2,
+          4,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 130,
+        "queues": [
+          3,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 140,
+        "queues": [
+          4,
+          1,
+          2,
+          1
+        ]
+      },
+      {
+        "t": 150,
+        "queues": [
+          2,
+          3,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 160,
+        "queues": [
+          1,
+          4,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 170,
+        "queues": [
+          0,
+          6,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 180,
+        "queues": [
+          2,
+          8,
+          1,
+          5
+        ]
+      },
+      {
+        "t": 190,
+        "queues": [
+          3,
+          6,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 200,
+        "queues": [
+          4,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 210,
+        "queues": [
+          4,
+          1,
+          2,
+          1
+        ]
+      },
+      {
+        "t": 220,
+        "queues": [
+          4,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 230,
+        "queues": [
+          1,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 240,
+        "queues": [
+          1,
+          7,
+          1,
+          4
+        ]
+      },
+      {
+        "t": 250,
+        "queues": [
+          1,
+          8,
+          0,
+          5
+        ]
+      },
+      {
+        "t": 260,
+        "queues": [
+          3,
+          7,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 270,
+        "queues": [
+          3,
+          3,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 280,
+        "queues": [
+          4,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 290,
+        "queues": [
+          4,
+          2,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 300,
+        "queues": [
+          1,
+          3,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 310,
+        "queues": [
+          1,
+          5,
+          1,
+          4
+        ]
+      },
+      {
+        "t": 320,
+        "queues": [
+          1,
+          6,
+          0,
+          5
+        ]
+      },
+      {
+        "t": 330,
+        "queues": [
+          2,
+          6,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 340,
+        "queues": [
+          3,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 350,
+        "queues": [
+          4,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 360,
+        "queues": [
+          5,
+          2,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 370,
+        "queues": [
+          1,
+          2,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 380,
+        "queues": [
+          1,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 390,
+        "queues": [
+          1,
+          7,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 400,
+        "queues": [
+          2,
+          6,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 410,
+        "queues": [
+          3,
+          2,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 420,
+        "queues": [
+          4,
+          1,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 430,
+        "queues": [
+          5,
+          5,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 440,
+        "queues": [
+          2,
+          6,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 450,
+        "queues": [
+          1,
+          7,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 460,
+        "queues": [
+          0,
           10,
-          43,
-          2,
-          0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
+          0,
+          5
         ]
       },
       {
-        "cycle": 12,
-        "queue_counts": [
-          9,
-          45,
-          2,
-          0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
-        ]
-      },
-      {
-        "cycle": 13,
-        "queue_counts": [
-          8,
-          52,
-          2,
-          0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
-        ]
-      },
-      {
-        "cycle": 14,
-        "queue_counts": [
-          9,
-          48,
-          2,
-          0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
-        ]
-      },
-      {
-        "cycle": 15,
-        "queue_counts": [
-          0,
-          43,
-          0,
-          0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
-        ]
-      },
-      {
-        "cycle": 16,
-        "queue_counts": [
-          0,
-          42,
-          0,
-          0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
-        ]
-      },
-      {
-        "cycle": 17,
-        "queue_counts": [
-          0,
-          26,
-          0,
-          0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
-        ]
-      },
-      {
-        "cycle": 18,
-        "queue_counts": [
-          0,
+        "t": 470,
+        "queues": [
+          1,
           10,
           0,
-          0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
+          4
         ]
       },
       {
-        "cycle": 19,
-        "queue_counts": [
+        "t": 480,
+        "queues": [
+          2,
+          6,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 490,
+        "queues": [
+          3,
+          4,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 500,
+        "queues": [
+          4,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 510,
+        "queues": [
+          2,
+          3,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 520,
+        "queues": [
+          1,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 530,
+        "queues": [
+          1,
+          7,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 540,
+        "queues": [
+          1,
+          7,
+          1,
+          5
+        ]
+      },
+      {
+        "t": 550,
+        "queues": [
+          2,
+          5,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 560,
+        "queues": [
+          3,
+          1,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 570,
+        "queues": [
+          4,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 580,
+        "queues": [
+          3,
+          3,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 590,
+        "queues": [
+          0,
+          4,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 600,
+        "queues": [
+          2,
+          6,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 610,
+        "queues": [
+          0,
+          8,
+          1,
+          5
+        ]
+      },
+      {
+        "t": 620,
+        "queues": [
+          2,
+          7,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 630,
+        "queues": [
+          3,
+          2,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 640,
+        "queues": [
+          3,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 650,
+        "queues": [
+          4,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 660,
+        "queues": [
+          0,
+          4,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 670,
+        "queues": [
+          0,
+          6,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 680,
+        "queues": [
+          0,
+          7,
+          1,
+          4
+        ]
+      },
+      {
+        "t": 690,
+        "queues": [
+          1,
+          7,
+          1,
+          3
+        ]
+      },
+      {
+        "t": 700,
+        "queues": [
+          1,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 710,
+        "queues": [
+          2,
+          1,
+          2,
+          0
+        ]
+      },
+      {
+        "t": 720,
+        "queues": [
+          4,
+          1,
+          2,
+          2
+        ]
+      },
+      {
+        "t": 730,
+        "queues": [
+          1,
+          3,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 740,
+        "queues": [
+          1,
+          5,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 750,
+        "queues": [
+          1,
+          7,
+          1,
+          5
+        ]
+      },
+      {
+        "t": 760,
+        "queues": [
+          2,
+          6,
+          1,
+          4
+        ]
+      },
+      {
+        "t": 770,
+        "queues": [
+          3,
+          3,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 780,
+        "queues": [
+          4,
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "t": 790,
+        "queues": [
+          5,
+          2,
+          2,
+          3
+        ]
+      },
+      {
+        "t": 800,
+        "queues": [
+          2,
+          4,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 810,
+        "queues": [
+          1,
+          5,
+          1,
+          5
+        ]
+      },
+      {
+        "t": 820,
+        "queues": [
+          1,
+          7,
+          0,
+          6
+        ]
+      },
+      {
+        "t": 830,
+        "queues": [
+          2,
+          8,
+          0,
+          6
+        ]
+      },
+      {
+        "t": 840,
+        "queues": [
+          3,
+          6,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 850,
+        "queues": [
+          3,
+          2,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 860,
+        "queues": [
+          5,
+          1,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 870,
+        "queues": [
+          3,
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 880,
+        "queues": [
+          0,
+          5,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 890,
+        "queues": [
+          1,
+          6,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 900,
+        "queues": [
+          1,
+          7,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 910,
+        "queues": [
+          2,
+          6,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 920,
+        "queues": [
+          3,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 930,
+        "queues": [
+          4,
+          0,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 940,
+        "queues": [
+          3,
+          3,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 950,
+        "queues": [
+          1,
+          4,
+          1,
+          3
+        ]
+      },
+      {
+        "t": 960,
+        "queues": [
+          1,
+          5,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 970,
+        "queues": [
+          1,
+          7,
+          1,
+          5
+        ]
+      },
+      {
+        "t": 980,
+        "queues": [
+          2,
+          7,
+          1,
+          3
+        ]
+      },
+      {
+        "t": 990,
+        "queues": [
+          3,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1000,
+        "queues": [
+          3,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 1010,
+        "queues": [
+          3,
+          2,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1020,
+        "queues": [
+          0,
+          4,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1030,
+        "queues": [
+          2,
+          6,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1040,
+        "queues": [
+          1,
+          8,
+          1,
+          5
+        ]
+      },
+      {
+        "t": 1050,
+        "queues": [
+          1,
+          8,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 1060,
+        "queues": [
+          3,
+          3,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 1070,
+        "queues": [
+          3,
+          2,
+          2,
+          0
+        ]
+      },
+      {
+        "t": 1080,
+        "queues": [
+          4,
+          2,
+          2,
+          1
+        ]
+      },
+      {
+        "t": 1090,
+        "queues": [
+          1,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1100,
+        "queues": [
+          0,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1110,
+        "queues": [
+          1,
+          7,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 1120,
+        "queues": [
+          1,
+          7,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1130,
+        "queues": [
+          2,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1140,
+        "queues": [
+          3,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1150,
+        "queues": [
+          3,
+          2,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1160,
+        "queues": [
+          2,
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1170,
+        "queues": [
+          1,
+          5,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 1180,
+        "queues": [
+          1,
+          7,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 1190,
+        "queues": [
+          2,
+          7,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 1200,
+        "queues": [
+          2,
+          6,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1210,
+        "queues": [
+          4,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1220,
+        "queues": [
+          5,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 1230,
+        "queues": [
+          4,
+          3,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1240,
+        "queues": [
+          1,
+          5,
+          1,
+          3
+        ]
+      },
+      {
+        "t": 1250,
+        "queues": [
+          0,
+          7,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 1260,
+        "queues": [
+          1,
+          9,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 1270,
+        "queues": [
+          2,
+          5,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1280,
+        "queues": [
+          3,
+          2,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 1290,
+        "queues": [
+          4,
+          1,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 1300,
+        "queues": [
+          3,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1310,
+        "queues": [
+          1,
+          3,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1320,
+        "queues": [
+          1,
+          6,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1330,
+        "queues": [
+          1,
+          7,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 1340,
+        "queues": [
+          2,
+          7,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1350,
+        "queues": [
+          3,
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1360,
+        "queues": [
+          4,
+          0,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1370,
+        "queues": [
+          4,
+          2,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1380,
+        "queues": [
+          0,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1390,
+        "queues": [
+          2,
+          6,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1400,
+        "queues": [
+          1,
+          8,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 1410,
+        "queues": [
+          2,
+          7,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 1420,
+        "queues": [
+          2,
+          2,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 1430,
+        "queues": [
+          4,
+          3,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 1440,
+        "queues": [
+          4,
+          2,
+          2,
+          1
+        ]
+      },
+      {
+        "t": 1450,
+        "queues": [
+          1,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1460,
+        "queues": [
+          0,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1470,
+        "queues": [
+          1,
+          7,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 1480,
+        "queues": [
+          2,
+          7,
+          1,
+          3
+        ]
+      },
+      {
+        "t": 1490,
+        "queues": [
+          3,
+          4,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1500,
+        "queues": [
+          4,
+          0,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1510,
+        "queues": [
+          5,
+          3,
+          2,
+          1
+        ]
+      },
+      {
+        "t": 1520,
+        "queues": [
+          3,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1530,
+        "queues": [
+          1,
+          6,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1540,
+        "queues": [
+          1,
+          8,
+          1,
+          4
+        ]
+      },
+      {
+        "t": 1550,
+        "queues": [
+          1,
+          8,
+          1,
+          4
+        ]
+      },
+      {
+        "t": 1560,
+        "queues": [
+          2,
+          7,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1570,
+        "queues": [
+          3,
+          2,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1580,
+        "queues": [
+          3,
+          1,
+          2,
+          1
+        ]
+      },
+      {
+        "t": 1590,
+        "queues": [
+          2,
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1600,
+        "queues": [
+          0,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1610,
+        "queues": [
+          1,
+          6,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 1620,
+        "queues": [
+          2,
+          8,
+          0,
+          5
+        ]
+      },
+      {
+        "t": 1630,
+        "queues": [
+          2,
+          6,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1640,
+        "queues": [
+          4,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1650,
+        "queues": [
+          4,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 1660,
+        "queues": [
+          3,
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1670,
+        "queues": [
+          0,
+          4,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 1680,
+        "queues": [
+          0,
+          6,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1690,
+        "queues": [
+          1,
+          7,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 1700,
+        "queues": [
+          2,
+          6,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1710,
+        "queues": [
+          2,
+          2,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1720,
+        "queues": [
+          4,
+          2,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1730,
+        "queues": [
+          4,
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1740,
+        "queues": [
+          1,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1750,
+        "queues": [
+          1,
+          6,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1760,
+        "queues": [
+          1,
+          7,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 1770,
+        "queues": [
+          1,
+          5,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 1780,
+        "queues": [
+          3,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1790,
+        "queues": [
+          4,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1800,
+        "queues": [
+          5,
+          2,
+          2,
+          1
+        ]
+      },
+      {
+        "t": 1810,
+        "queues": [
+          0,
+          2,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1820,
+        "queues": [
+          1,
+          6,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1830,
+        "queues": [
+          0,
+          7,
+          0,
+          5
+        ]
+      },
+      {
+        "t": 1840,
+        "queues": [
+          1,
+          6,
+          1,
+          3
+        ]
+      },
+      {
+        "t": 1850,
+        "queues": [
+          1,
+          2,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 1860,
+        "queues": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 1870,
+        "queues": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 1880,
+        "queues": [
           0,
           0,
           0,
           0
-        ],
-        "greens": [
-          30,
-          30,
-          30,
-          30
+        ]
+      },
+      {
+        "t": 1890,
+        "queues": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 1900,
+        "queues": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 1910,
+        "queues": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 1920,
+        "queues": [
+          0,
+          0,
+          0,
+          0
         ]
       }
     ]
   },
   "adaptive": {
     "completed_trips": 702,
-    "avg_waiting_time": 53.4002849002849,
-    "avg_duration": 165.6937321937322,
-    "avg_time_loss": 75.88121082621083,
+    "avg_waiting_time": 7.894586894586895,
+    "avg_duration": 110.10826210826211,
+    "avg_time_loss": 20.308091168091135,
     "mode": "adaptive",
-    "cycle_log": [
+    "sim_seconds": 1917,
+    "green_phases": 115,
+    "phase_log": [
       {
-        "cycle": 0,
-        "queue_counts": [
+        "phase": 0,
+        "lanes": [
           0,
-          0,
+          2
+        ],
+        "start": 1.0,
+        "queue_at_start": 0,
+        "lane_queues": [
           0,
           0
         ],
-        "greens": [
-          10,
-          10,
-          10,
-          10
-        ]
+        "waited": 0.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "gap-out",
+        "choice": "idle rotation",
+        "emergency": false,
+        "queue_at_end": 0
       },
       {
-        "cycle": 1,
-        "queue_counts": [
+        "phase": 1,
+        "lanes": [
           1,
+          3
+        ],
+        "start": 17.0,
+        "queue_at_start": 0,
+        "lane_queues": [
           0,
-          1,
           0
         ],
-        "greens": [
-          10,
-          10,
-          10,
-          10
-        ]
+        "waited": 0.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "gap-out",
+        "choice": "idle rotation",
+        "emergency": false,
+        "queue_at_end": 0
       },
       {
-        "cycle": 2,
-        "queue_counts": [
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 33.0,
+        "queue_at_start": 0,
+        "lane_queues": [
+          0,
+          0
+        ],
+        "waited": 0.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "idle rotation",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 49.0,
+        "queue_at_start": 2,
+        "lane_queues": [
+          2,
+          1
+        ],
+        "waited": 10.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 65.0,
+        "queue_at_start": 2,
+        "lane_queues": [
+          2,
+          1
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 81.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          2
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 97.0,
+        "queue_at_start": 4,
+        "lane_queues": [
+          4,
+          1
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 113.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 4
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 129.0,
+        "queue_at_start": 3,
+        "lane_queues": [
           3,
-          4,
-          1,
-          0
+          1
         ],
-        "greens": [
-          10,
-          10,
-          10,
-          10
-        ]
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
       },
       {
-        "cycle": 3,
-        "queue_counts": [
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 145.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 163.0,
+        "queue_at_start": 3,
+        "lane_queues": [
           3,
-          7,
-          0,
-          0
+          1
         ],
-        "greens": [
-          10,
-          14.0,
-          10,
-          10
-        ]
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
       },
       {
-        "cycle": 4,
-        "queue_counts": [
-          4,
-          9,
+        "phase": 1,
+        "lanes": [
           1,
-          0
+          3
         ],
-        "greens": [
-          10,
-          18.0,
-          10,
-          10
-        ]
-      },
-      {
-        "cycle": 5,
-        "queue_counts": [
-          4,
-          10,
-          1,
-          0
-        ],
-        "greens": [
-          10,
-          20.0,
-          10,
-          10
-        ]
-      },
-      {
-        "cycle": 6,
-        "queue_counts": [
-          5,
-          8,
-          1,
-          0
-        ],
-        "greens": [
-          10,
-          16.0,
-          10,
-          10
-        ]
-      },
-      {
-        "cycle": 7,
-        "queue_counts": [
-          5,
-          10,
-          0,
-          0
-        ],
-        "greens": [
-          10,
-          20.0,
-          10,
-          10
-        ]
-      },
-      {
-        "cycle": 8,
-        "queue_counts": [
+        "start": 179.0,
+        "queue_at_start": 6,
+        "lane_queues": [
           6,
-          7,
-          1,
-          0
+          2
         ],
-        "greens": [
-          12.0,
-          14.0,
-          10,
-          10
-        ]
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
       },
       {
-        "cycle": 9,
-        "queue_counts": [
-          5,
-          10,
-          1,
-          0
-        ],
-        "greens": [
-          10,
-          20.0,
-          10,
-          10
-        ]
-      },
-      {
-        "cycle": 10,
-        "queue_counts": [
-          6,
-          9,
+        "phase": 0,
+        "lanes": [
           0,
-          0
+          2
         ],
-        "greens": [
-          12.0,
-          18.0,
-          10,
-          10
-        ]
+        "start": 197.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 0
       },
       {
-        "cycle": 11,
-        "queue_counts": [
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 213.0,
+        "queue_at_start": 7,
+        "lane_queues": [
+          7,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 14.0,
+        "green": 14.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 233.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 22.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 249.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 267.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 283.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          2
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 301.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 317.0,
+        "queue_at_start": 5,
+        "lane_queues": [
           5,
-          10,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 333.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          0
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 349.0,
+        "queue_at_start": 7,
+        "lane_queues": [
+          7,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 14.0,
+        "green": 14.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 369.0,
+        "queue_at_start": 4,
+        "lane_queues": [
+          4,
+          1
+        ],
+        "waited": 22.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 385.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          2
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 403.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          0
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 419.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          2
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 4
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 435.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          0
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 451.0,
+        "queue_at_start": 7,
+        "lane_queues": [
+          7,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 14.0,
+        "green": 14.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 471.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          0
+        ],
+        "waited": 22.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 487.0,
+        "queue_at_start": 7,
+        "lane_queues": [
+          7,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 14.0,
+        "green": 14.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 507.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          2
+        ],
+        "waited": 22.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 523.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          2
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 541.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 557.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          4
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 573.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 589.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 607.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 623.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 641.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          0
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 657.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 675.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "gap-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 691.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          2
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 709.0,
+        "queue_at_start": 1,
+        "lane_queues": [
           1,
           1
         ],
-        "greens": [
-          10,
-          20.0,
-          10,
-          10
-        ]
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
       },
       {
-        "cycle": 12,
-        "queue_counts": [
-          5,
-          9,
-          0,
-          3
-        ],
-        "greens": [
-          10,
-          18.0,
-          10,
-          10
-        ]
-      },
-      {
-        "cycle": 13,
-        "queue_counts": [
-          5,
-          10,
+        "phase": 1,
+        "lanes": [
           1,
           3
         ],
-        "greens": [
-          10,
-          20.0,
-          10,
-          10
-        ]
-      },
-      {
-        "cycle": 14,
-        "queue_counts": [
+        "start": 725.0,
+        "queue_at_start": 6,
+        "lane_queues": [
           6,
-          9,
-          1,
-          5
+          2
         ],
-        "greens": [
-          12.0,
-          18.0,
-          10,
-          10
-        ]
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
       },
       {
-        "cycle": 15,
-        "queue_counts": [
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 743.0,
+        "queue_at_start": 5,
+        "lane_queues": [
           5,
-          10,
-          0,
-          5
+          0
         ],
-        "greens": [
-          10,
-          20.0,
-          10,
-          10
-        ]
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
       },
       {
-        "cycle": 16,
-        "queue_counts": [
-          5,
-          9,
-          0,
-          6
-        ],
-        "greens": [
-          10,
-          18.0,
-          10,
-          12.0
-        ]
-      },
-      {
-        "cycle": 17,
-        "queue_counts": [
-          6,
-          10,
-          0,
-          6
-        ],
-        "greens": [
-          12.0,
-          20.0,
-          10,
-          12.0
-        ]
-      },
-      {
-        "cycle": 18,
-        "queue_counts": [
-          6,
-          11,
-          0,
-          7
-        ],
-        "greens": [
-          12.0,
-          22.0,
-          10,
-          14.0
-        ]
-      },
-      {
-        "cycle": 19,
-        "queue_counts": [
-          7,
-          11,
-          1,
-          7
-        ],
-        "greens": [
-          14.0,
-          22.0,
-          10,
-          14.0
-        ]
-      },
-      {
-        "cycle": 20,
-        "queue_counts": [
-          6,
-          9,
-          1,
-          6
-        ],
-        "greens": [
-          12.0,
-          18.0,
-          10,
-          12.0
-        ]
-      },
-      {
-        "cycle": 21,
-        "queue_counts": [
-          8,
-          11,
-          0,
-          8
-        ],
-        "greens": [
-          16.0,
-          22.0,
-          10,
-          16.0
-        ]
-      },
-      {
-        "cycle": 22,
-        "queue_counts": [
-          5,
-          12,
-          1,
-          5
-        ],
-        "greens": [
-          10,
-          24.0,
-          10,
-          10
-        ]
-      },
-      {
-        "cycle": 23,
-        "queue_counts": [
-          7,
-          9,
-          0,
-          9
-        ],
-        "greens": [
-          14.0,
-          18.0,
-          10,
-          18.0
-        ]
-      },
-      {
-        "cycle": 24,
-        "queue_counts": [
-          6,
-          11,
-          2,
-          5
-        ],
-        "greens": [
-          12.0,
-          22.0,
-          10,
-          10
-        ]
-      },
-      {
-        "cycle": 25,
-        "queue_counts": [
-          6,
-          10,
-          0,
-          9
-        ],
-        "greens": [
-          12.0,
-          20.0,
-          10,
-          18.0
-        ]
-      },
-      {
-        "cycle": 26,
-        "queue_counts": [
-          6,
-          12,
+        "phase": 1,
+        "lanes": [
           1,
           3
         ],
-        "greens": [
-          12.0,
-          24.0,
-          10,
-          10
-        ]
-      },
-      {
-        "cycle": 27,
-        "queue_counts": [
+        "start": 759.0,
+        "queue_at_start": 6,
+        "lane_queues": [
           6,
-          10,
-          1,
-          8
+          3
         ],
-        "greens": [
-          12.0,
-          20.0,
-          10,
-          16.0
-        ]
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
       },
       {
-        "cycle": 28,
-        "queue_counts": [
-          7,
-          12,
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 777.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          2
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "gap-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
           1,
+          3
+        ],
+        "start": 793.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 811.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 827.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 843.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 859.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          2
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 877.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 893.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
           4
         ],
-        "greens": [
-          14.0,
-          24.0,
-          10,
-          10
-        ]
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
       },
       {
-        "cycle": 29,
-        "queue_counts": [
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 911.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 927.0,
+        "queue_at_start": 5,
+        "lane_queues": [
           5,
-          11,
-          0,
-          9
+          3
         ],
-        "greens": [
-          10,
-          22.0,
-          10,
-          18.0
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 943.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          0
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 959.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 975.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          2
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 991.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1009.0,
+        "queue_at_start": 2,
+        "lane_queues": [
+          2,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1025.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1043.0,
+        "queue_at_start": 4,
+        "lane_queues": [
+          4,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1059.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1077.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "gap-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1093.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          2
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1109.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1125.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1143.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "gap-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1159.0,
+        "queue_at_start": 4,
+        "lane_queues": [
+          4,
+          2
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1175.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1191.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          4
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 4
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1209.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          0
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "gap-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1225.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1241.0,
+        "queue_at_start": 2,
+        "lane_queues": [
+          2,
+          1
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1257.0,
+        "queue_at_start": 7,
+        "lane_queues": [
+          7,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 14.0,
+        "green": 14.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1277.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 22.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1293.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          2
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1311.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1327.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          2
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1345.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          0
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1361.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1377.0,
+        "queue_at_start": 2,
+        "lane_queues": [
+          2,
+          2
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1393.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1411.0,
+        "queue_at_start": 4,
+        "lane_queues": [
+          4,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "gap-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1427.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1445.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1461.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1477.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1493.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          2
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1511.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1527.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1543.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1559.0,
+        "queue_at_start": 7,
+        "lane_queues": [
+          7,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 14.0,
+        "green": 14.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 4
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1579.0,
+        "queue_at_start": 2,
+        "lane_queues": [
+          2,
+          1
+        ],
+        "waited": 22.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1595.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 3
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1613.0,
+        "queue_at_start": 4,
+        "lane_queues": [
+          4,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1629.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1647.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1663.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1681.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1697.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          2
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1715.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1731.0,
+        "queue_at_start": 4,
+        "lane_queues": [
+          4,
+          4
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1747.0,
+        "queue_at_start": 4,
+        "lane_queues": [
+          4,
+          1
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1763.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1781.0,
+        "queue_at_start": 3,
+        "lane_queues": [
+          3,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1797.0,
+        "queue_at_start": 5,
+        "lane_queues": [
+          5,
+          2
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 2
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1813.0,
+        "queue_at_start": 2,
+        "lane_queues": [
+          2,
+          1
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1829.0,
+        "queue_at_start": 6,
+        "lane_queues": [
+          6,
+          3
+        ],
+        "waited": 18.0,
+        "planned": 12.0,
+        "green": 12.0,
+        "end_reason": "max-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 1
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1847.0,
+        "queue_at_start": 2,
+        "lane_queues": [
+          2,
+          1
+        ],
+        "waited": 20.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "gap-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1863.0,
+        "queue_at_start": 2,
+        "lane_queues": [
+          2,
+          0
+        ],
+        "waited": 18.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "gap-out",
+        "choice": "priority",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1879.0,
+        "queue_at_start": 0,
+        "lane_queues": [
+          0,
+          0
+        ],
+        "waited": 0.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "gap-out",
+        "choice": "idle rotation",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 1,
+        "lanes": [
+          1,
+          3
+        ],
+        "start": 1895.0,
+        "queue_at_start": 0,
+        "lane_queues": [
+          0,
+          0
+        ],
+        "waited": 0.0,
+        "planned": 10,
+        "green": 10.0,
+        "end_reason": "gap-out",
+        "choice": "idle rotation",
+        "emergency": false,
+        "queue_at_end": 0
+      },
+      {
+        "phase": 0,
+        "lanes": [
+          0,
+          2
+        ],
+        "start": 1911.0,
+        "queue_at_start": 0,
+        "lane_queues": [
+          0,
+          0
+        ],
+        "waited": 0.0,
+        "planned": 10,
+        "green": null,
+        "end_reason": null,
+        "choice": "idle rotation",
+        "emergency": false
+      }
+    ],
+    "queue_log": [
+      {
+        "t": 0,
+        "queues": [
+          0,
+          0,
+          0,
+          0
         ]
       },
       {
-        "cycle": 30,
-        "queue_counts": [
+        "t": 10,
+        "queues": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 20,
+        "queues": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 30,
+        "queues": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 40,
+        "queues": [
+          1,
+          0,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 50,
+        "queues": [
           1,
           1,
-          0,
-          0
-        ],
-        "greens": [
-          10,
-          10,
-          10,
-          10
+          1,
+          1
         ]
       },
       {
-        "cycle": 31,
-        "queue_counts": [
-          0,
-          0,
-          0,
-          0
-        ],
-        "greens": [
-          10,
-          10,
-          10,
-          10
+        "t": 60,
+        "queues": [
+          2,
+          2,
+          1,
+          1
         ]
       },
       {
-        "cycle": 32,
-        "queue_counts": [
+        "t": 70,
+        "queues": [
+          2,
+          4,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 80,
+        "queues": [
+          2,
+          5,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 90,
+        "queues": [
+          3,
+          2,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 100,
+        "queues": [
+          2,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 110,
+        "queues": [
+          1,
+          5,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 120,
+        "queues": [
+          2,
+          4,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 130,
+        "queues": [
+          2,
+          4,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 140,
+        "queues": [
+          1,
+          5,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 150,
+        "queues": [
+          2,
+          4,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 160,
+        "queues": [
+          3,
+          2,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 170,
+        "queues": [
+          0,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 180,
+        "queues": [
+          2,
+          5,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 190,
+        "queues": [
+          3,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 200,
+        "queues": [
+          2,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 210,
+        "queues": [
+          0,
+          6,
+          1,
+          3
+        ]
+      },
+      {
+        "t": 220,
+        "queues": [
+          2,
+          4,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 230,
+        "queues": [
+          2,
+          3,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 240,
+        "queues": [
+          1,
+          4,
+          1,
+          3
+        ]
+      },
+      {
+        "t": 250,
+        "queues": [
+          1,
+          5,
+          1,
+          3
+        ]
+      },
+      {
+        "t": 260,
+        "queues": [
+          3,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 270,
+        "queues": [
+          1,
+          4,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 280,
+        "queues": [
+          1,
+          5,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 290,
+        "queues": [
+          2,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 300,
+        "queues": [
+          3,
+          2,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 310,
+        "queues": [
+          1,
+          4,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 320,
+        "queues": [
+          2,
+          4,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 330,
+        "queues": [
+          3,
+          4,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 340,
+        "queues": [
+          1,
+          6,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 350,
+        "queues": [
+          2,
+          6,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 360,
+        "queues": [
+          3,
+          4,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 370,
+        "queues": [
+          3,
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 380,
+        "queues": [
+          1,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 390,
+        "queues": [
+          2,
+          5,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 400,
+        "queues": [
+          3,
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 410,
+        "queues": [
+          1,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 420,
+        "queues": [
+          2,
+          3,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 430,
+        "queues": [
+          3,
+          5,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 440,
+        "queues": [
+          1,
+          6,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 450,
+        "queues": [
+          2,
+          7,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 460,
+        "queues": [
+          2,
+          5,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 470,
+        "queues": [
+          3,
+          4,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 480,
+        "queues": [
+          0,
+          5,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 490,
+        "queues": [
+          1,
+          6,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 500,
+        "queues": [
+          2,
+          3,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 510,
+        "queues": [
+          1,
+          4,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 520,
+        "queues": [
+          1,
+          6,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 530,
+        "queues": [
+          2,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 540,
+        "queues": [
+          3,
+          2,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 550,
+        "queues": [
+          1,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 560,
+        "queues": [
+          2,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 570,
+        "queues": [
+          3,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 580,
+        "queues": [
+          1,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 590,
+        "queues": [
+          1,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 600,
+        "queues": [
+          3,
+          2,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 610,
+        "queues": [
+          1,
+          4,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 620,
+        "queues": [
+          2,
+          6,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 630,
+        "queues": [
+          3,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 640,
+        "queues": [
+          3,
+          3,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 650,
+        "queues": [
+          1,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 660,
+        "queues": [
+          1,
+          5,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 670,
+        "queues": [
+          2,
+          3,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 680,
+        "queues": [
+          1,
+          4,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 690,
+        "queues": [
+          1,
+          6,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 700,
+        "queues": [
+          1,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 710,
+        "queues": [
+          1,
+          4,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 720,
+        "queues": [
+          3,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 730,
+        "queues": [
+          4,
+          5,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 740,
+        "queues": [
+          5,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 750,
+        "queues": [
+          2,
+          5,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 760,
+        "queues": [
+          2,
+          5,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 770,
+        "queues": [
+          3,
+          2,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 780,
+        "queues": [
+          2,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 790,
+        "queues": [
+          1,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 800,
+        "queues": [
+          2,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 810,
+        "queues": [
+          3,
+          2,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 820,
+        "queues": [
+          1,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 830,
+        "queues": [
+          2,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 840,
+        "queues": [
+          3,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 850,
+        "queues": [
+          0,
+          5,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 860,
+        "queues": [
+          2,
+          5,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 870,
+        "queues": [
+          2,
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 880,
+        "queues": [
+          1,
+          4,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 890,
+        "queues": [
+          1,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 900,
+        "queues": [
+          2,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 910,
+        "queues": [
+          3,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 920,
+        "queues": [
+          1,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 930,
+        "queues": [
+          2,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 940,
+        "queues": [
+          3,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 950,
+        "queues": [
+          1,
+          4,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 960,
+        "queues": [
+          2,
+          4,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 970,
+        "queues": [
+          3,
+          2,
+          2,
+          1
+        ]
+      },
+      {
+        "t": 980,
+        "queues": [
+          1,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 990,
+        "queues": [
+          1,
+          6,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1000,
+        "queues": [
+          1,
+          4,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 1010,
+        "queues": [
+          1,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1020,
+        "queues": [
+          1,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1030,
+        "queues": [
+          3,
+          4,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 1040,
+        "queues": [
+          4,
+          3,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 1050,
+        "queues": [
+          1,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1060,
+        "queues": [
+          1,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1070,
+        "queues": [
+          2,
+          2,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 1080,
+        "queues": [
+          1,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1090,
+        "queues": [
+          1,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1100,
+        "queues": [
+          2,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1110,
+        "queues": [
+          2,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1120,
+        "queues": [
+          1,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1130,
+        "queues": [
+          2,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1140,
+        "queues": [
+          3,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1150,
+        "queues": [
+          0,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1160,
+        "queues": [
+          2,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1170,
+        "queues": [
+          3,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1180,
+        "queues": [
+          1,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1190,
+        "queues": [
+          2,
+          6,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 1200,
+        "queues": [
+          2,
+          5,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1210,
+        "queues": [
+          3,
+          4,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 1220,
+        "queues": [
+          1,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1230,
+        "queues": [
+          2,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1240,
+        "queues": [
+          2,
+          4,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 1250,
+        "queues": [
+          1,
+          6,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1260,
+        "queues": [
+          1,
+          6,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1270,
+        "queues": [
+          2,
+          2,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 1280,
+        "queues": [
+          1,
+          4,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1290,
+        "queues": [
+          1,
+          6,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1300,
+        "queues": [
+          2,
+          5,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1310,
+        "queues": [
+          3,
+          2,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1320,
+        "queues": [
+          1,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1330,
+        "queues": [
+          2,
+          4,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1340,
+        "queues": [
+          3,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1350,
+        "queues": [
+          2,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1360,
+        "queues": [
+          1,
+          5,
+          1,
+          3
+        ]
+      },
+      {
+        "t": 1370,
+        "queues": [
+          2,
+          3,
+          2,
+          1
+        ]
+      },
+      {
+        "t": 1380,
+        "queues": [
+          0,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1390,
+        "queues": [
+          2,
+          6,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1400,
+        "queues": [
+          3,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1410,
+        "queues": [
+          4,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1420,
+        "queues": [
+          0,
+          4,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1430,
+        "queues": [
+          2,
+          5,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1440,
+        "queues": [
+          2,
+          2,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1450,
+        "queues": [
+          1,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1460,
+        "queues": [
+          1,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1470,
+        "queues": [
+          2,
+          3,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 1480,
+        "queues": [
+          1,
+          4,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1490,
+        "queues": [
+          1,
+          6,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1500,
+        "queues": [
+          2,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1510,
+        "queues": [
+          3,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1520,
+        "queues": [
+          1,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1530,
+        "queues": [
+          2,
+          4,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1540,
+        "queues": [
+          3,
+          4,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1550,
+        "queues": [
+          1,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1560,
+        "queues": [
+          1,
+          7,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1570,
+        "queues": [
+          2,
+          4,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1580,
+        "queues": [
+          1,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1590,
+        "queues": [
+          2,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1600,
+        "queues": [
+          2,
+          5,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1610,
+        "queues": [
+          4,
+          3,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 1620,
+        "queues": [
+          2,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1630,
+        "queues": [
+          1,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1640,
+        "queues": [
+          2,
+          2,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 1650,
+        "queues": [
+          1,
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1660,
+        "queues": [
+          1,
+          5,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1670,
+        "queues": [
+          2,
+          3,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 1680,
+        "queues": [
+          3,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1690,
+        "queues": [
+          1,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1700,
+        "queues": [
+          2,
+          4,
+          0,
+          1
+        ]
+      },
+      {
+        "t": 1710,
+        "queues": [
+          2,
+          2,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 1720,
+        "queues": [
+          2,
+          4,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1730,
+        "queues": [
+          2,
+          4,
+          0,
+          4
+        ]
+      },
+      {
+        "t": 1740,
+        "queues": [
+          3,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1750,
+        "queues": [
+          2,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1760,
+        "queues": [
+          1,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1770,
+        "queues": [
+          1,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1780,
+        "queues": [
+          3,
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "t": 1790,
+        "queues": [
+          1,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1800,
+        "queues": [
+          2,
+          4,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 1810,
+        "queues": [
+          2,
+          1,
+          1,
+          2
+        ]
+      },
+      {
+        "t": 1820,
+        "queues": [
+          1,
+          4,
+          0,
+          2
+        ]
+      },
+      {
+        "t": 1830,
+        "queues": [
+          1,
+          5,
+          0,
+          3
+        ]
+      },
+      {
+        "t": 1840,
+        "queues": [
+          2,
+          1,
+          1,
+          0
+        ]
+      },
+      {
+        "t": 1850,
+        "queues": [
+          0,
+          2,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 1860,
+        "queues": [
+          0,
+          2,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 1870,
+        "queues": [
           0,
           0,
           0,
           0
-        ],
-        "greens": [
-          10,
-          10,
-          10,
-          10
+        ]
+      },
+      {
+        "t": 1880,
+        "queues": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 1890,
+        "queues": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 1900,
+        "queues": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "t": 1910,
+        "queues": [
+          0,
+          0,
+          0,
+          0
         ]
       }
     ]
   },
-  "waiting_time_improvement_pct": 59.42833641784906
+  "waiting_time_improvement_pct": 33.059548254620125
 }

@@ -1,25 +1,69 @@
 """
-Adaptive Traffic Signal Control - Vehicle Detection UI
+Adaptive Traffic Signal Control - live camera demo
 
-Runs YOLOv4-tiny (via OpenCV DNN) over each lane's video, draws bounding
-boxes around detected vehicles, tracks/counts them with the project's
-own centroid tracker, then computes and displays adaptive green-signal
-timings for all lanes.
+Each of the four videos is one approach to an intersection. The program
+works like a real camera-actuated signal:
 
-Replaces the old tensorflow==2.1.0 + dlib + tensornets pipeline
-(multithreading.py), which cannot install on Python 3.12/3.14.
+  1. YOLOv4-tiny (OpenCV DNN) detects vehicles in every approach.
+  2. Only vehicles standing between that camera's two road-edge lines are
+     considered (road_roi.json - draw the lines with calibrate_roi.py; the
+     tool opens automatically for a camera without lines), so pavements,
+     side roads and cars parked off the road are ignored. A vehicle inside
+     the lines that doesn't move while its traffic has green is treated as
+     parked and ignored too.
+  3. The number of vehicles inside the zone is that approach's queue.
+  4. controller.py turns the four queues into signal lights following
+     real-world rules: opposing approaches (North + South, East + West)
+     share the green, and every change goes through a yellow and an
+     all-red interval sized from the speed limit and junction width.
+  5. The lights drive the videos: a RED approach's video is paused (its
+     traffic is stopped and its queue is frozen), a GREEN approach's video
+     plays (its traffic moves), and the controller keeps re-reading the
+     queues to decide when to switch and which phase goes next.
+
+Usage:
+    python detect_and_signal.py                        # adaptive, two-phase
+    python detect_and_signal.py --mode fixed           # fixed-timer baseline, same videos
+    python detect_and_signal.py --phasing four-phase   # one approach at a time
+    python detect_and_signal.py --pedestrians          # pedestrian-safe minimum green
+    python detect_and_signal.py --loop --fast          # loop the footage, run unthrottled
+
+Keys: P pause, F toggle fast mode, Q quit.
 """
 
-import os
-import time
-import json
+import argparse
 import csv
+import json
+import os
+import statistics
+import time
+from collections import deque
+
 import cv2
 import numpy as np
 
+import ui
+from controller import (
+    DEFAULT_INTERSECTION_WIDTH_M,
+    DEFAULT_SPEED_KMH,
+    FIXED_GREEN,
+    GREEN,
+    MAX_GREEN,
+    MIN_GREEN,
+    RED,
+    SATURATION_RATE,
+    YELLOW,
+    AdaptiveController,
+    FixedTimeController,
+    change_intervals,
+    pedestrian_min_green,
+    single_phase_plan,
+    two_phase_plan,
+)
+from emergency import EmergencyDetector
+from road_roi import RoadROI, load_config
 from tracking.centroidtracker import CentroidTracker
 from tracking.trackableobject import TrackableObject
-from emergency import EmergencyDetector
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODELS_DIR = os.path.join(BASE_DIR, "models")
@@ -35,9 +79,6 @@ INPUT_SIZE = 416
 DETECT_EVERY_N_FRAMES = 2
 
 VEHICLE_CLASSES = {"bicycle", "car", "motorbike", "bus", "truck"}
-BOX_COLOR = (0, 255, 0)
-TRACK_COLOR = (255, 0, 0)
-TEXT_COLOR = (0, 0, 255)
 
 
 def load_class_names():
@@ -46,6 +87,12 @@ def load_class_names():
 
 
 def load_network():
+    if not hasattr(cv2.dnn, "readNetFromDarknet"):
+        # OpenCV 5 removed the Darknet importer that YOLOv4-tiny needs.
+        raise SystemExit(
+            "OpenCV {} cannot load Darknet (YOLO .cfg/.weights) models. "
+            "Install OpenCV 4.x: pip install \"opencv-python>=4.5.4,<5\"".format(cv2.__version__)
+        )
     net = cv2.dnn.readNetFromDarknet(CFG_PATH, WEIGHTS_PATH)
     net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
     net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
@@ -92,386 +139,500 @@ def detect_vehicles(net, output_layers, class_names, frame):
 
 TILE_WIDTH = 640
 TILE_HEIGHT = 360
-GRID_WINDOW_NAME = "Adaptive Traffic Signal - Live Detection (4 Lanes)"
+GRID_WINDOW_NAME = "Adaptive Traffic Signal - Intersection"
+SUMMARY_WINDOW_NAME = "Traffic Signal Report"
+
+DEFAULT_VIDEOS = ["1.mp4", "2.mp4", "3.mp4", "4.mp4"]
+# Approach order matches the SUMO network and the two-phase plan:
+# 0 + 2 (North + South) share a phase, as do 1 + 3 (East + West).
+DEFAULT_LABELS = ["North", "East", "South", "West"]
+
+# The queue is the median of the last few detection counts, so one missed
+# or doubled detection doesn't flip the signal decision.
+QUEUE_SMOOTHING = 5
+TELEMETRY_INTERVAL_S = 0.5
+
+# A vehicle has "moved" once its centre travels this far (tile pixels) -
+# well above detection jitter. One that stays put for PARKED_AFTER_S
+# seconds of *playing* footage (its traffic had green and still didn't
+# move) is parked: it's left out of the queue and the count. Paused (red)
+# footage doesn't advance this clock, so cars queued at a red are safe.
+MOVE_THRESHOLD_PX = 12
+PARKED_AFTER_S = 20
 
 
-class LaneState:
-    def __init__(self, video_path, label):
+class LaneCamera:
+    """One approach: its video, road zone, detections, tracker and stats."""
+
+    def __init__(self, video_path, label, roi, loop=False):
         self.video_path = video_path
+        self.video_name = os.path.basename(video_path)
         self.label = label
-        self.cap = cv2.VideoCapture(video_path) if os.path.exists(video_path) else None
-        self.ct = CentroidTracker(maxDisappeared=15, maxDistance=75)
-        self.trackable_objects = {}
-        self.total = 0
-        self.frame_count = 0
-        self.last_rects = []
-        self.finished = self.cap is None
-        self.last_tile = np.zeros((TILE_HEIGHT, TILE_WIDTH, 3), dtype=np.uint8)
-        self.fps = self.cap.get(cv2.CAP_PROP_FPS) if self.cap is not None else 30.0
+        self.roi = roi
+        self.loop = loop
+
+        cap = cv2.VideoCapture(video_path) if os.path.exists(video_path) else None
+        if cap is not None and not cap.isOpened():
+            cap = None
+        self.cap = cap
+        self.has_video = cap is not None
+        self.finished = not self.has_video
+        self.fps = cap.get(cv2.CAP_PROP_FPS) if cap is not None else 30.0
         if not self.fps or self.fps <= 1:
             self.fps = 30.0
+        self.total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) if cap is not None else 0
+        self.frame_idx = 0
+        self.full_frame = None
+        self.frame = np.zeros((TILE_HEIGHT, TILE_WIDTH, 3), dtype=np.uint8)
+
+        self.boxes = []                     # (rect, on_road, object_id, is_emergency) in tile coords
+        self.queue_history = deque(maxlen=QUEUE_SMOOTHING)
+        self._reset_tracking()
+        self.counted = 0
+        self.emergency_active = False
+
+        self.green_time = 0.0
+        self.max_queue = 0
+        self.queue_integral = 0.0
+
+    def _reset_tracking(self):
+        self.ct = CentroidTracker(maxDisappeared=15, maxDistance=75)
+        self.trackable_objects = {}
         self.emergency = EmergencyDetector()
-        self.emergency_ever_detected = False
 
+    @property
+    def queue(self):
+        if self.finished or not self.queue_history:
+            return 0
+        return int(round(statistics.median(self.queue_history)))
 
-def render_lane_tile(state, net, output_layers, class_names):
-    if state.finished:
-        return draw_overlay(state.last_tile.copy(), state)
+    @property
+    def progress(self):
+        if self.finished:
+            return 1.0
+        return self.frame_idx / self.total_frames if self.total_frames > 0 else 0.0
 
-    ret, frame = state.cap.read()
-    if not ret:
-        state.finished = True
-        state.cap.release()
-        return draw_overlay(state.last_tile.copy(), state, finished=True)
+    def read_next(self):
+        """Advances the video one frame; returns False once it has ended."""
+        if self.finished:
+            return False
+        ok, frame = self.cap.read()
+        if not ok and self.loop and self.frame_idx > 0:
+            # Treat the clip as a continuous stream of arriving traffic
+            self.cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+            ok, frame = self.cap.read()
+            if ok:
+                self.frame_idx = 0
+                self._reset_tracking()
+        if not ok:
+            self.finished = True
+            self.cap.release()
+            self.boxes = []
+            self.queue_history.clear()
+            self.emergency_active = False
+            return False
+        self.frame_idx += 1
+        self.full_frame = frame
+        self.frame = cv2.resize(frame, (TILE_WIDTH, TILE_HEIGHT))
+        return True
 
-    state.frame_count += 1
-    orig_h, orig_w = frame.shape[:2]
+    def analyze(self, net, output_layers, class_names):
+        """Detects vehicles on the current frame, keeps the ones inside the
+        road zone, and updates the queue, tracker, count and emergency flag."""
+        if self.full_frame is None:
+            return
+        orig_h, orig_w = self.full_frame.shape[:2]
+        scale_x = TILE_WIDTH / orig_w
+        scale_y = TILE_HEIGHT / orig_h
+        rects = [
+            (int(sx * scale_x), int(sy * scale_y), int(ex * scale_x), int(ey * scale_y))
+            for (sx, sy, ex, ey) in detect_vehicles(net, output_layers, class_names, self.full_frame)
+        ]
+        on_road = [self.roi.contains_rect(r, TILE_WIDTH, TILE_HEIGHT) if self.roi else True for r in rects]
+        road_rects = [r for r, inside in zip(rects, on_road) if inside]
 
-    # Detect on the full-resolution frame (small/distant vehicles keep more
-    # detail than if we downscaled to the tile size first), then scale the
-    # resulting boxes into tile coordinates for drawing/display.
-    if state.frame_count % DETECT_EVERY_N_FRAMES == 0:
-        state.last_rects = detect_vehicles(net, output_layers, class_names, frame)
+        objects = self.ct.update(road_rects)
 
-    scale_x = TILE_WIDTH / orig_w
-    scale_y = TILE_HEIGHT / orig_h
-    tile = cv2.resize(frame, (TILE_WIDTH, TILE_HEIGHT))
+        def nearest_rect(centroid):
+            cx, cy = centroid
+            return min(road_rects,
+                       key=lambda r: ((r[0] + r[2]) / 2 - cx) ** 2 + ((r[1] + r[3]) / 2 - cy) ** 2)
 
-    scaled_rects = [
-        (int(sx * scale_x), int(sy * scale_y), int(ex * scale_x), int(ey * scale_y))
-        for (sx, sy, ex, ey) in state.last_rects
-    ]
+        identified = {}
+        emergency_active = False
+        parked_after_frames = PARKED_AFTER_S * self.fps
+        for object_id, centroid in objects.items():
+            to = self.trackable_objects.get(object_id)
+            if to is None:
+                to = TrackableObject(object_id, centroid)
+                to.frames.append(self.frame_idx)
+                self.trackable_objects[object_id] = to
+            elif self.ct.disappeared.get(object_id, 0) == 0:
+                to.centroids.append(centroid)
+                to.frames.append(self.frame_idx)
+                self._update_motion(to, parked_after_frames)
 
-    for (startX, startY, endX, endY) in scaled_rects:
-        cv2.rectangle(tile, (startX, startY), (endX, endY), BOX_COLOR, 2)
-
-    objects = state.ct.update(scaled_rects)
-
-    def nearest_rect(centroid):
-        if not scaled_rects:
-            return None
-        cx, cy = centroid
-        return min(
-            scaled_rects,
-            key=lambda r: (((r[0] + r[2]) / 2 - cx) ** 2 + ((r[1] + r[3]) / 2 - cy) ** 2),
-        )
-
-    for (object_id, centroid) in objects.items():
-        to = state.trackable_objects.get(object_id, None)
-
-        if to is None:
-            to = TrackableObject(object_id, centroid)
-        else:
-            to.centroids.append(centroid)
-            if not to.counted:
-                state.total += 1
-                to.counted = True
-
-        state.trackable_objects[object_id] = to
-
-        rect = nearest_rect(centroid)
-        is_emergency = False
-        if rect is not None:
+            # Only objects matched to a box this frame - an unseen object's
+            # "nearest" box belongs to another vehicle.
+            if not road_rects or self.ct.disappeared.get(object_id, 0) != 0:
+                continue
+            rect = nearest_rect(centroid)
             sx, sy, ex, ey = rect
-            crop = tile[max(0, sy):max(0, ey), max(0, sx):max(0, ex)]
-            is_emergency = state.emergency.update(object_id, crop)
+            crop = self.frame[max(0, sy):max(0, ey), max(0, sx):max(0, ex)]
+            is_emergency = self.emergency.update(object_id, crop) and not to.parked
+            emergency_active = emergency_active or is_emergency
+            identified[rect] = (object_id, is_emergency, to.parked)
 
-        if is_emergency:
-            state.emergency_ever_detected = True
-            sx, sy, ex, ey = rect
-            cv2.rectangle(tile, (sx, sy), (ex, ey), (255, 0, 255), 3)
-            cv2.putText(tile, "EMERGENCY", (sx, max(15, sy - 8)),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 255), 2)
+        for object_id in list(self.trackable_objects):
+            if object_id not in objects:
+                del self.trackable_objects[object_id]
+                self.emergency.forget(object_id)
 
-        cv2.circle(tile, (int(centroid[0]), int(centroid[1])), 3, BOX_COLOR, -1)
+        self.emergency_active = emergency_active
+        self.boxes = []
+        for rect, inside in zip(rects, on_road):
+            object_id, is_emergency, parked = identified.get(rect, (None, False, False)) if inside \
+                else (None, False, False)
+            self.boxes.append((rect, inside, object_id, is_emergency, parked))
+        self.queue_history.append(sum(1 for b in self.boxes if b[1] and not b[4]))
 
-    if state.emergency_ever_detected:
-        cv2.putText(tile, "!! EMERGENCY VEHICLE - PREEMPTING SIGNAL !!", (8, TILE_HEIGHT - 12),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 255), 2)
+    def _update_motion(self, to, parked_after_frames):
+        """Counts a vehicle once it actually travels, and flags it as parked
+        if it hasn't moved over the last PARKED_AFTER_S seconds of footage."""
+        # Positions are compared with averages, so box jitter around a
+        # stationary car doesn't look like movement.
+        def mean(points):
+            return (sum(p[0] for p in points) / len(points), sum(p[1] for p in points) / len(points))
 
-    state.last_tile = tile
-    return draw_overlay(tile.copy(), state)
+        def dist(a, b):
+            return ((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2) ** 0.5
+
+        if not to.counted and dist(to.centroids[-1], mean(to.centroids[:5])) >= MOVE_THRESHOLD_PX:
+            self.counted += 1
+            to.counted = True
+
+        window_start = self.frame_idx - parked_after_frames
+        if to.frames[0] > window_start:
+            to.parked = False       # not watched long enough to judge yet
+            return
+        # Keep one sample from before the window as the reference point
+        while len(to.frames) > 2 and to.frames[1] <= window_start:
+            to.frames.pop(0)
+            to.centroids.pop(0)
+        centre = mean(to.centroids)
+        to.parked = all(dist(c, centre) < MOVE_THRESHOLD_PX for c in to.centroids)
 
 
-def draw_overlay(tile, state, finished=False):
-    cv2.rectangle(tile, (0, 0), (TILE_WIDTH, 34), (0, 0, 0), -1)
-    status = "FINISHED" if (finished or state.finished) else "LIVE"
-    if state.emergency_ever_detected:
-        status += " / EMERGENCY"
-    text = "{}  |  Count: {}  [{}]".format(state.label, state.total, status)
-    text_color = (255, 0, 255) if state.emergency_ever_detected else (0, 255, 255)
-    cv2.putText(tile, text, (8, 23), cv2.FONT_HERSHEY_SIMPLEX, 0.6, text_color, 2)
-    border_color = (255, 0, 255) if state.emergency_ever_detected else (80, 80, 80)
-    cv2.rectangle(tile, (0, 0), (TILE_WIDTH - 1, TILE_HEIGHT - 1), border_color, 2)
-    return tile
+def light_label(lane, light, ctrl, index):
+    if lane.finished:
+        return "CLEARED" if lane.has_video else "NO VIDEO"
+    if light == GREEN:
+        remaining = ctrl.time_remaining()
+        return "GREEN {:.0f}s".format(remaining) if remaining > 0 else "GREEN (holding)"
+    if light == YELLOW:
+        return "YELLOW"
+    wait = ctrl.lane_red_wait(index)
+    return "RED  waited {:.0f}s".format(wait) if wait >= 1 else "RED"
 
 
-def run_combined(video_paths, labels, net, output_layers, class_names,
-                  output_video_path=None, telemetry_path=None):
-    lanes = [LaneState(path, label) for path, label in zip(video_paths, labels)]
+def phase_names(ctrl, labels):
+    return [" + ".join(labels[lane] for lane in phase) for phase in ctrl.phases]
 
-    # Pace live playback to the source videos' own frame rate so the grid
-    # window doesn't race ahead as fast as detection allows. Detection speed
-    # still varies frame to frame, so the live window can look uneven; the
-    # recorded output file (below) is written at a fixed fps and always
-    # plays back perfectly smoothly regardless of how long detection took.
-    target_fps = min(lane.fps for lane in lanes)
-    frame_interval = 1.0 / target_fps
 
-    cv2.namedWindow(GRID_WINDOW_NAME)
+def phase_text(ctrl, labels):
+    if ctrl.green_phase is None:
+        return "ALL RED"
+    name = phase_names(ctrl, labels)[ctrl.green_phase]
+    if ctrl.phase == GREEN:
+        return "{} GREEN  {:.0f} / {:.0f} s".format(name, ctrl.phase_elapsed, ctrl.planned_green)
+    return "{} YELLOW".format(name)
 
-    writer = None
-    if output_video_path is not None:
-        grid_size = (TILE_WIDTH * 2, TILE_HEIGHT * 2)
-        fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-        writer = cv2.VideoWriter(output_video_path, fourcc, target_fps, grid_size)
 
-    telemetry_file = None
-    telemetry_writer = None
-    if telemetry_path is not None:
-        telemetry_file = open(telemetry_path, "w", newline="")
-        telemetry_writer = csv.writer(telemetry_file)
-        telemetry_writer.writerow(["elapsed_s", "lane", "count", "emergency"])
+def decision_text(ctrl, labels):
+    if not ctrl.phase_log:
+        return "Waiting for the first decision..."
+    names = phase_names(ctrl, labels)
+    last = ctrl.phase_log[-1]
+    s = "Decision: {} -> green by {} ({} queued, waited {:.0f}s, planned {:.0f}s)".format(
+        names[last["phase"]], last["choice"], last["queue_at_start"], last["waited"], last["planned"])
+    finished = [e for e in ctrl.phase_log if e["end_reason"]]
+    if finished:
+        prev = finished[-1]
+        s += "    Last: {} ended by {} after {:.0f}s".format(
+            names[prev["phase"]], prev["end_reason"], prev["green"])
+    return s
 
-    start_time = time.perf_counter()
 
-    while not all(lane.finished for lane in lanes):
-        loop_start = time.perf_counter()
+def render_grid(lanes, lights, ctrl, labels, mode, fps, fast, paused=False):
+    tiles = []
+    for i, (lane, light) in enumerate(zip(lanes, lights)):
+        green_progress = None
+        if light == GREEN and i in ctrl.green_lanes and ctrl.planned_green > 0:
+            green_progress = ctrl.phase_elapsed / ctrl.planned_green
+        notice = None
+        if not lane.has_video:
+            notice = "Video not found: {}".format(lane.video_name)
+        elif lane.roi is None:
+            notice = "No road lines: run calibrate_roi.py"
+        tiles.append(ui.lane_tile(
+            lane.frame, lane.label, light, light_label(lane, light, ctrl, i), lane.queue, lane.counted,
+            lane.boxes, lane.roi, lane.progress, green_progress, lane.finished, lane.emergency_active,
+            flash_phase=int(ctrl.time * 4), notice=notice,
+        ))
+    grid = np.vstack((np.hstack(tiles[:2]), np.hstack(tiles[2:])))
+    if paused:
+        grid = ui.paused_overlay(grid)
+    bar = ui.status_bar(grid.shape[1], ctrl.time, mode, phase_text(ctrl, labels),
+                        decision_text(ctrl, labels), fps, fast, paused)
+    return np.vstack((grid, bar))
 
-        tiles = [render_lane_tile(lane, net, output_layers, class_names) for lane in lanes]
 
-        if telemetry_writer is not None:
-            elapsed_s = round(time.perf_counter() - start_time, 2)
-            for lane in lanes:
-                telemetry_writer.writerow(
-                    [elapsed_s, lane.label, lane.total, int(lane.emergency_ever_detected)]
-                )
+def lane_summary(lane, index, ctrl):
+    phases = [e for e in ctrl.phase_log if index in e["lanes"]]
+    return {
+        "label": lane.label,
+        "video": lane.video_name,
+        "counted": lane.counted,
+        "green_time": round(lane.green_time, 1),
+        "phases": len(phases),
+        "avg_wait": round(sum(e["waited"] for e in phases) / len(phases), 1) if phases else None,
+        "max_queue": lane.max_queue,
+        "avg_queue": round(lane.queue_integral / ctrl.time, 2) if ctrl.time > 0 else 0.0,
+        "road_lines": lane.roi is not None,
+    }
 
-        top_row = np.hstack((tiles[0], tiles[1]))
-        bottom_row = np.hstack((tiles[2], tiles[3]))
-        grid = np.vstack((top_row, bottom_row))
 
-        if writer is not None:
-            writer.write(grid)
+def build_controller(args, num_lanes):
+    phases = two_phase_plan(num_lanes) if args.phasing == "two-phase" else single_phase_plan(num_lanes)
+    yellow, all_red = change_intervals(args.speed_limit, args.intersection_width)
+    if args.mode == "fixed":
+        return FixedTimeController(num_lanes, phases, green_time=args.fixed_green,
+                                   yellow_time=yellow, all_red_time=all_red)
+    min_green = args.min_green
+    if args.pedestrians:
+        min_green = max(min_green, pedestrian_min_green(args.intersection_width))
+    return AdaptiveController(num_lanes, phases, min_green=min_green, max_green=args.max_green,
+                              yellow_time=yellow, all_red_time=all_red)
 
-        cv2.imshow(GRID_WINDOW_NAME, grid)
 
-        elapsed = time.perf_counter() - loop_start
-        remaining_ms = max(1, int((frame_interval - elapsed) * 1000))
+def run(args):
+    class_names = load_class_names()
+    net, output_layers = load_network()
 
-        key = cv2.waitKey(remaining_ms) & 0xFF
-        if key == ord('q'):
-            break
-        elif key == ord('p'):
-            cv2.waitKey(0)
+    video_paths = [p if os.path.isabs(p) or os.path.exists(p) else os.path.join(VIDEOS_DIR, p)
+                   for p in args.videos]
+    labels = DEFAULT_LABELS[:len(video_paths)]
+    rois = load_config()
+
+    missing = [p for p in video_paths if os.path.exists(p) and RoadROI.from_config(os.path.basename(p), rois) is None]
+    if missing and not (args.skip_calibration or args.headless):
+        # Counting needs the road edges - draw them before the run starts
+        import calibrate_roi
+        print("No road lines yet for: {} - opening the calibration tool.".format(
+            ", ".join(os.path.basename(p) for p in missing)))
+        calibrate_roi.calibrate(missing, 0)
+        rois = load_config()
+    lanes = [LaneCamera(path, label, RoadROI.from_config(os.path.basename(path), rois), args.loop)
+             for path, label in zip(video_paths, labels)]
 
     for lane in lanes:
-        if lane.cap is not None:
-            lane.cap.release()
-        emergency_note = " [EMERGENCY VEHICLE SEEN]" if lane.emergency_ever_detected else ""
-        print("{}: {} vehicles detected{}".format(lane.label, lane.total, emergency_note))
+        if not lane.has_video:
+            print("Warning: {} video not found ({})".format(lane.label, lane.video_path))
+        elif lane.roi is None:
+            print("Warning: no road lines for {} ({}) - counting the whole frame. "
+                  "Run: python calibrate_roi.py".format(lane.label, lane.video_name))
 
-    if writer is not None:
-        writer.release()
-        print("Saved smooth annotated video to:", output_video_path)
+    ctrl = build_controller(args, len(lanes))
+    print("Signal plan: {} | phases: {} | yellow {:.1f}s, all-red {:.1f}s{}".format(
+        args.mode, ", ".join(phase_names(ctrl, labels)), ctrl.yellow_time, ctrl.all_red_time,
+        " | min green {:.1f}s (pedestrians)".format(ctrl.min_green) if args.pedestrians and args.mode != "fixed"
+        else ""))
 
-    if telemetry_file is not None:
+    # The signal clock runs on video time: one tick = one video frame, so
+    # timings are exact no matter how fast detection runs on this machine.
+    fps = min([lane.fps for lane in lanes if lane.has_video] or [30.0])
+    dt = 1.0 / fps
+
+    for lane in lanes:
+        if lane.read_next():
+            lane.analyze(net, output_layers, class_names)
+
+    outputs_dir = os.path.join(BASE_DIR, "outputs")
+    os.makedirs(outputs_dir, exist_ok=True)
+    writer = None
+    if not args.no_record:
+        grid_size = (TILE_WIDTH * 2, TILE_HEIGHT * 2 + ui.STATUS_BAR_HEIGHT)
+        writer = cv2.VideoWriter(os.path.join(outputs_dir, "traffic_detection_output.mp4"),
+                                 cv2.VideoWriter_fourcc(*"mp4v"), fps, grid_size)
+    telemetry_file = open(os.path.join(outputs_dir, "telemetry.csv"), "w", newline="")
+    telemetry = csv.writer(telemetry_file)
+    telemetry.writerow(["t", "lane", "light", "queue", "counted"])
+    next_telemetry = 0.0
+
+    mode_label = "{} {}".format(args.mode, args.phasing)
+    if not args.headless:
+        cv2.namedWindow(GRID_WINDOW_NAME)
+    lights = [RED] * len(lanes)
+    fast = args.fast or args.headless
+    render_fps = 0.0
+
+    try:
+        while True:
+            loop_start = time.perf_counter()
+
+            # Traffic on the green/yellow approach moves; red approaches stay paused
+            for lane, light in zip(lanes, lights):
+                if light != RED and lane.read_next() and lane.frame_idx % DETECT_EVERY_N_FRAMES == 0:
+                    lane.analyze(net, output_layers, class_names)
+
+            queues = [lane.queue for lane in lanes]
+            lights = ctrl.update(dt, queues, [lane.emergency_active for lane in lanes],
+                                 [not lane.finished for lane in lanes])
+
+            for lane, light, queue in zip(lanes, lights, queues):
+                if light == GREEN:
+                    lane.green_time += dt
+                lane.max_queue = max(lane.max_queue, queue)
+                lane.queue_integral += queue * dt
+
+            if ctrl.time >= next_telemetry:
+                for lane, light, queue in zip(lanes, lights, queues):
+                    telemetry.writerow([round(ctrl.time, 2), lane.label, light, queue, lane.counted])
+                next_telemetry += TELEMETRY_INTERVAL_S
+
+            grid = render_grid(lanes, lights, ctrl, labels, mode_label, render_fps, fast)
+            if writer is not None:
+                writer.write(grid)
+            if all(lane.finished for lane in lanes):
+                break
+            if args.duration and ctrl.time >= args.duration:
+                break
+            if args.headless:
+                continue
+            cv2.imshow(GRID_WINDOW_NAME, grid)
+
+            elapsed = time.perf_counter() - loop_start
+            wait_ms = 1 if fast else max(1, int((dt - elapsed) * 1000))
+            key = cv2.waitKey(wait_ms) & 0xFF
+            if key == ord("q"):
+                break
+            if key == ord("f"):
+                fast = not fast
+            elif key == ord("p"):
+                cv2.imshow(GRID_WINDOW_NAME, render_grid(lanes, lights, ctrl, labels, mode_label,
+                                                         render_fps, fast, paused=True))
+                if cv2.waitKey(0) & 0xFF == ord("q"):
+                    break
+
+            loop_fps = 1.0 / max(1e-6, time.perf_counter() - loop_start)
+            render_fps = loop_fps if render_fps == 0.0 else 0.9 * render_fps + 0.1 * loop_fps
+    finally:
+        for lane in lanes:
+            if lane.cap is not None:
+                lane.cap.release()
+        if writer is not None:
+            writer.release()
         telemetry_file.close()
+        if not args.headless:
+            cv2.destroyWindow(GRID_WINDOW_NAME)
 
-    cv2.destroyWindow(GRID_WINDOW_NAME)
-
-    counts = [lane.total for lane in lanes]
-    emergency_flags = [lane.emergency_ever_detected for lane in lanes]
-    return counts, emergency_flags
+    return lanes, ctrl, labels
 
 
-# --- Adaptive signal timing: saturation-flow model with carry-over ---
-#
-# Instead of sorting counts into fixed 30/60/120s buckets (which treats a
-# lane with 26 vehicles the same as one with 39), each lane's green time is
-# derived from how long it actually takes to clear its queue at a realistic
-# discharge rate, capped so one congested lane can't hog the whole cycle.
-# Vehicles that don't fit in that cap aren't dropped - they carry over as
-# real backlog into the next cycle's demand (no fabricated vehicles), and a
-# lane that stays backlogged gets its cap raised a little further each
-# consecutive cycle ("aging") until it clears - a bounded, linear escalation
-# that's guaranteed to converge instead of compounding out of control.
-SATURATION_RATE = 0.5     # vehicles a lane can clear per second of green
-MIN_GREEN = 10             # seconds - floor so no lane is skipped entirely
-MAX_GREEN = 60             # seconds - baseline cap per lane per cycle
-CAP_ESCALATION_STEP = 15   # seconds added to the cap per consecutive backlogged cycle
-ABSOLUTE_MAX_GREEN = 120   # seconds - hard ceiling even after escalation
+def save_results(lanes, ctrl, labels, args):
+    mode = args.mode
+    outputs_dir = os.path.join(BASE_DIR, "outputs")
+    stats = [lane_summary(lane, i, ctrl) for i, lane in enumerate(lanes)]
+    names = phase_names(ctrl, labels)
+    phases = [dict(e, label=names[e["phase"]]) for e in ctrl.phase_log]
 
-# Emergency preemption: a lane with a detected emergency vehicle bypasses
-# the cap entirely and is given enough green to clear its *entire* demand
-# (live count + any backlog) in one phase, exactly like a real signal
-# preemption system would hold green until the priority vehicle is through.
-EMERGENCY_MIN_GREEN = 20
+    # Per-approach vehicle counts, used by simulate_comparison.py and
+    # sumo_sim/generate_routes.py as each approach's relative demand.
+    with open(os.path.join(BASE_DIR, "out.txt"), "w") as f:
+        for lane in lanes:
+            f.write("{}\n".format(lane.counted))
 
-STATE_PATH = os.path.join(BASE_DIR, "signal_state.json")
+    with open(os.path.join(outputs_dir, "latest_run.json"), "w") as f:
+        json.dump({
+            "timestamp": time.time(),
+            "mode": mode,
+            "labels": labels,
+            "sim_time": round(ctrl.time, 2),
+            "phase_plan": [{"name": name, "lanes": phase} for name, phase in zip(names, ctrl.phases)],
+            "settings": {
+                "phasing": args.phasing,
+                "min_green": getattr(ctrl, "min_green", None),
+                "max_green": getattr(ctrl, "max_green", None),
+                "fixed_green": getattr(ctrl, "green_time", None),
+                "saturation_rate": SATURATION_RATE,
+                "yellow": ctrl.yellow_time,
+                "all_red": ctrl.all_red_time,
+                "speed_limit_kmh": args.speed_limit,
+                "intersection_width_m": args.intersection_width,
+                "pedestrians": args.pedestrians,
+            },
+            "lanes": stats,
+            "phases": phases,
+        }, f, indent=2)
 
-
-def load_signal_state(num_lanes):
-    if os.path.exists(STATE_PATH):
-        try:
-            with open(STATE_PATH, "r") as f:
-                data = json.load(f)
-                backlog = data.get("backlog", [])
-                cycles_waited = data.get("cycles_waited", [])
-                if len(backlog) == num_lanes and len(cycles_waited) == num_lanes:
-                    return backlog, cycles_waited
-        except (ValueError, OSError):
-            pass
-    return [0.0] * num_lanes, [0] * num_lanes
-
-
-# Kept for backwards compatibility with anything still calling the old name.
-def load_backlog(num_lanes):
-    backlog, _ = load_signal_state(num_lanes)
-    return backlog
-
-
-def save_signal_state(backlog, cycles_waited):
-    with open(STATE_PATH, "w") as f:
-        json.dump({"backlog": backlog, "cycles_waited": cycles_waited}, f)
+    print("\n{} control - {:.0f} s simulated, {} greens".format(mode.capitalize(), ctrl.time,
+                                                                    len(ctrl.phase_log)))
+    for s in stats:
+        print("{:5s}: counted {:3d} | green {:5.1f}s over {} phase(s) | avg wait {} | max queue {}".format(
+            s["label"], s["counted"], s["green_time"], s["phases"],
+            "{:.0f}s".format(s["avg_wait"]) if s["avg_wait"] is not None else "-", s["max_queue"]))
+    return stats, phases
 
 
-def compute_signal_plan(vehicle_counts, backlog, cycles_waited=None, emergency_flags=None):
-    num_lanes = len(vehicle_counts)
-    if cycles_waited is None:
-        cycles_waited = [0] * num_lanes
-    if emergency_flags is None:
-        emergency_flags = [False] * num_lanes
-
-    plan = []
-    new_backlog = []
-    new_cycles_waited = []
-
-    for count, waiting, waited_cycles, is_emergency in zip(vehicle_counts, backlog, cycles_waited, emergency_flags):
-        # Demand is always the REAL number of vehicles - live count plus
-        # actual backlog. Never inflate it; only the cap below grows.
-        demand = count + waiting
-
-        if is_emergency:
-            # Preempt: hold green long enough to clear the whole queue,
-            # not just the usual capped share.
-            green = max(EMERGENCY_MIN_GREEN, demand / SATURATION_RATE) if demand > 0 else EMERGENCY_MIN_GREEN
-            served = demand
-            leftover = 0.0
-            next_waited_cycles = 0
-        else:
-            # A lane that has been backlogged for N consecutive cycles gets
-            # its cap raised by CAP_ESCALATION_STEP per cycle (bounded by
-            # ABSOLUTE_MAX_GREEN), so a heavy lane's window keeps widening
-            # until it actually clears, instead of staying capped forever.
-            effective_max_green = min(ABSOLUTE_MAX_GREEN, MAX_GREEN + waited_cycles * CAP_ESCALATION_STEP)
-
-            ideal_green = demand / SATURATION_RATE if demand > 0 else 0
-            green = max(MIN_GREEN, min(effective_max_green, ideal_green)) if demand > 0 else MIN_GREEN
-
-            capacity = green * SATURATION_RATE
-            served = min(demand, capacity)
-            leftover = max(0.0, demand - capacity)
-            next_waited_cycles = waited_cycles + 1 if leftover > 0 else 0
-
-        plan.append({
-            "count": count,
-            "backlog_in": round(waiting, 1),
-            "demand": round(demand, 1),
-            "green": round(green, 1),
-            "served": round(served, 1),
-            "leftover": round(leftover, 1),
-            "cycles_waited": next_waited_cycles,
-            "emergency": bool(is_emergency),
-        })
-        new_backlog.append(leftover)
-        new_cycles_waited.append(next_waited_cycles)
-
-    return plan, new_backlog, new_cycles_waited
-
-
-def show_summary_window(plan):
-    lane_labels = ["Lane {}".format(i + 1) for i in range(len(plan))]
-    greens = [p["green"] for p in plan]
-
-    panel_height = 480
-    panel_width = 760
-    panel = np.zeros((panel_height, panel_width, 3), dtype=np.uint8)
-
-    cv2.putText(panel, "Adaptive Traffic Signal - Summary", (30, 40),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2)
-
-    row_y = 90
-    for label, p in zip(lane_labels, plan):
-        tag = "  [EMERGENCY PREEMPTION]" if p.get("emergency") else ""
-        line1 = "{}: detected {}  (+{} carried over) -> demand {}{}".format(
-            label, p["count"], p["backlog_in"], p["demand"], tag)
-        line2 = "  green {:.1f}s  |  served {:.1f}  |  carries over {:.1f}".format(
-            p["green"], p["served"], p["leftover"])
-        line_color = (255, 0, 255) if p.get("emergency") else (255, 255, 255)
-        bar_color = (255, 0, 255) if p.get("emergency") else (0, 200, 0)
-        cv2.putText(panel, line1, (30, row_y), cv2.FONT_HERSHEY_SIMPLEX, 0.55, line_color, 1)
-        cv2.putText(panel, line2, (30, row_y + 22), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (150, 255, 150), 1)
-        bar_len = int((p["green"] / max(greens)) * 500) if max(greens) > 0 else 0
-        cv2.rectangle(panel, (30, row_y + 32), (30 + bar_len, row_y + 48), bar_color, -1)
-        row_y += 80
-
-    cv2.putText(panel, "Total cycle time: {:.1f}s".format(sum(greens)), (30, row_y + 20),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 255), 1)
-    cv2.putText(panel, "Press any key to close", (30, panel_height - 20),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (150, 150, 150), 1)
-
-    cv2.imshow("Traffic Signal Summary", panel)
+def show_summary_window(labels, stats, phases, sim_time, mode, phasing, headless=False):
+    panel = ui.summary_panel(labels, stats, phases, sim_time, mode, phasing)
+    path = os.path.join(BASE_DIR, "outputs", "summary.png")
+    cv2.imwrite(path, panel)
+    if headless:
+        print("Summary saved to {}".format(path))
+        return
+    cv2.imshow(SUMMARY_WINDOW_NAME, panel)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
 
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description="Camera-actuated adaptive traffic signal demo")
+    parser.add_argument("--mode", choices=["adaptive", "fixed"], default="adaptive",
+                        help="adaptive control, or the fixed-timer baseline for comparison")
+    parser.add_argument("--videos", nargs=4, default=DEFAULT_VIDEOS, metavar="VIDEO",
+                        help="four approach videos (default: videos/1.mp4 .. 4.mp4)")
+    parser.add_argument("--loop", action="store_true",
+                        help="loop each video so traffic keeps arriving (stop with Q or --duration)")
+    parser.add_argument("--duration", type=float, default=None,
+                        help="stop after this many simulated seconds")
+    parser.add_argument("--fast", action="store_true", help="don't throttle to real time (toggle with F)")
+    parser.add_argument("--no-record", action="store_true", help="don't save outputs/traffic_detection_output.mp4")
+    parser.add_argument("--min-green", type=float, default=MIN_GREEN)
+    parser.add_argument("--max-green", type=float, default=MAX_GREEN)
+    parser.add_argument("--fixed-green", type=float, default=FIXED_GREEN)
+    parser.add_argument("--phasing", choices=["two-phase", "four-phase"], default="two-phase",
+                        help="two-phase: North+South then East+West (default); "
+                             "four-phase: one approach at a time")
+    parser.add_argument("--speed-limit", type=float, default=DEFAULT_SPEED_KMH,
+                        help="approach speed in km/h - sets the yellow and all-red times")
+    parser.add_argument("--intersection-width", type=float, default=DEFAULT_INTERSECTION_WIDTH_M,
+                        help="junction width in metres - sets the all-red (and pedestrian) time")
+    parser.add_argument("--pedestrians", action="store_true",
+                        help="never give less green than a pedestrian needs to cross")
+    parser.add_argument("--skip-calibration", action="store_true",
+                        help="don't open the road-line tool for cameras without lines")
+    parser.add_argument("--headless", action="store_true",
+                        help="no windows (servers, Google Colab): run at full speed and save "
+                             "the video and outputs/summary.png")
+    return parser.parse_args(argv)
+
+
 def main():
-    class_names = load_class_names()
-    net, output_layers = load_network()
-
-    video_files = ["1.mp4", "2.mp4", "3.mp4", "4.mp4"]
-    labels = ["Lane 1", "Lane 2", "Lane 3", "Lane 4"]
-    video_paths = [os.path.join(VIDEOS_DIR, f) for f in video_files]
-
-    outputs_dir = os.path.join(BASE_DIR, "outputs")
-    os.makedirs(outputs_dir, exist_ok=True)
-    output_video_path = os.path.join(outputs_dir, "traffic_detection_output.mp4")
-    telemetry_path = os.path.join(outputs_dir, "telemetry.csv")
-
-    vehicle_counts, emergency_flags = run_combined(
-        video_paths, labels, net, output_layers, class_names,
-        output_video_path, telemetry_path,
-    )
-
-    out_path = os.path.join(BASE_DIR, "out.txt")
-    with open(out_path, "w") as f:
-        for count in vehicle_counts:
-            f.write("{}\n".format(count))
-
-    backlog, cycles_waited = load_signal_state(len(vehicle_counts))
-    plan, new_backlog, new_cycles_waited = compute_signal_plan(vehicle_counts, backlog, cycles_waited, emergency_flags)
-    save_signal_state(new_backlog, new_cycles_waited)
-
-    print("Vehicle counts per lane:", vehicle_counts)
-    for label, p in zip(labels, plan):
-        tag = " [EMERGENCY PREEMPTION]" if p["emergency"] else ""
-        print("{}: demand={} green={:.1f}s served={:.1f} carries_over={:.1f}{}".format(
-            label, p["demand"], p["green"], p["served"], p["leftover"], tag))
-    print("Total cycle time: {:.1f}s".format(sum(p["green"] for p in plan)))
-
-    latest_run_path = os.path.join(outputs_dir, "latest_run.json")
-    with open(latest_run_path, "w") as f:
-        json.dump({
-            "timestamp": time.time(),
-            "labels": labels,
-            "vehicle_counts": vehicle_counts,
-            "emergency_flags": emergency_flags,
-            "plan": plan,
-            "total_cycle_time": sum(p["green"] for p in plan),
-        }, f, indent=2)
-
-    show_summary_window(plan)
+    args = parse_args()
+    lanes, ctrl, labels = run(args)
+    stats, phases = save_results(lanes, ctrl, labels, args)
+    show_summary_window(labels, stats, phases, ctrl.time, args.mode, args.phasing, args.headless)
 
 
 if __name__ == "__main__":
