@@ -13,7 +13,7 @@
 ![SUMO](https://img.shields.io/badge/SUMO-TraCI-222222?style=for-the-badge)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/diyorbek57/Adaptive-Traffic-Signal-Control-Using-Computer-Vision/blob/main/colab_demo.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SandeshBansode/Adaptive-Traffic-Signal-Control-Using-Computer-Vision/blob/main/colab_demo.ipynb)
 
 <br><br>
 
@@ -263,7 +263,7 @@ The dashboard has four tabs:
 
 ### Run it in Google Colab (no install)
 
-Open **[colab_demo.ipynb in Colab](https://colab.research.google.com/github/diyorbek57/Adaptive-Traffic-Signal-Control-Using-Computer-Vision/blob/main/colab_demo.ipynb)** and choose
+Open **[colab_demo.ipynb in Colab](https://colab.research.google.com/github/SandeshBansode/Adaptive-Traffic-Signal-Control-Using-Computer-Vision/blob/main/colab_demo.ipynb)** and choose
 *Runtime → Run all*. The notebook does the following:
 - clones the repo and runs the tests
 - previews the road lines on each camera
