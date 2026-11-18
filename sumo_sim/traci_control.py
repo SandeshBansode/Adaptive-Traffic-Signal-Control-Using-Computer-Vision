@@ -1,19 +1,20 @@
 """
-Closed-loop SUMO validation of the adaptive signal algorithm.
+Closed-loop SUMO validation of the signal controllers.
 
-Unlike simulate_comparison.py (which simulates the queueing math directly),
-this drives an actual SUMO microscopic traffic simulation through TraCI:
-every cycle it reads the REAL simulated queue length on each lane (how many
-vehicles are actually halted at the light), feeds that into the exact same
-compute_signal_plan() used by detect_and_signal.py, and applies the
-resulting green durations to the traffic light - then lets SUMO simulate
-real car-following behavior for that duration. This is the strongest
-available validation: an independent, well-established traffic simulator
-confirms the algorithm actually reduces waiting time for simulated vehicles.
+Drives a SUMO microscopic traffic simulation through TraCI, one second at a
+time: every step it counts the vehicles each "camera" would see (everything
+within DETECTION_RANGE_M of the stop line, moving or stopped - the same
+thing the camera demo counts inside its road zone), feeds those queues to
+the exact same controller the camera demo uses (controller.py), and sets
+the traffic light to whatever the controller decides. SUMO then simulates real car-following behavior. An independent,
+well-established traffic simulator confirming the result is the strongest
+validation available.
+
+Both policies run through the same loop with the same two-phase plan and
+change intervals, so the only difference between them is the controller.
 
 Usage:
-    python traci_control.py --mode adaptive
-    python traci_control.py --mode fixed
+    python traci_control.py --mode both
     python traci_control.py --mode adaptive --gui
 """
 
@@ -40,94 +41,95 @@ SUMO_SIM_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SUMO_SIM_DIR)
 sys.path.append(PROJECT_DIR)
 
-from detect_and_signal import compute_signal_plan, SATURATION_RATE  # noqa: E402
+from controller import GREEN, YELLOW, AdaptiveController, FixedTimeController, two_phase_plan  # noqa: E402
 
 SUMOCFG_PATH = os.path.join(SUMO_SIM_DIR, "intersection.sumocfg")
 OUTPUTS_DIR = os.path.join(PROJECT_DIR, "outputs")
 
 TLS_ID = "center"
-# index of each lane's green phase in intersection.net.xml's tlLogic
-LANE_GREEN_PHASE = {0: 0, 1: 2, 2: 4, 3: 6}
-YELLOW_PHASE_FOR = {0: 1, 1: 3, 2: 5, 3: 7}
-LANE_APPROACH_EDGE = {0: "north_in", 1: "east_in", 2: "south_in", 3: "west_in"}
+# Approach order matches the signal's link indices (incLanes in intersection.net.xml)
+LANE_APPROACH_EDGE = ["north_in", "east_in", "south_in", "west_in"]
 
-YELLOW_DURATION = 3
-FIXED_GREEN = 30
-NUM_CYCLES = 20
-MAX_DRAIN_CYCLES = 60  # safety cap in case a policy is genuinely oversaturated and never empties
+# What the controller "sees" on each approach. The camera demo counts every
+# vehicle inside its road zone, moving or stopped, so SUMO measures the same
+# thing: all vehicles within DETECTION_RANGE_M of the stop line (about what
+# one camera covers). "halting" counts only stopped vehicles instead.
+DETECTION_RANGE_M = 100
+
+STEP = 1.0              # seconds per simulation step (SUMO default step length)
+MAX_STEPS = 3 * 3600    # safety cap in case a policy never clears the network
+QUEUE_SAMPLE_EVERY = 10 # seconds between queue samples in the saved log
 
 
-def run(mode, use_gui=False):
+def approach_queues(detection="camera", detection_range=DETECTION_RANGE_M):
+    if detection == "halting":
+        return [traci.edge.getLastStepHaltingNumber(edge) for edge in LANE_APPROACH_EDGE]
+    queues = []
+    for edge in LANE_APPROACH_EDGE:
+        count = 0
+        for lane_index in range(traci.edge.getLaneNumber(edge)):
+            lane = "{}_{}".format(edge, lane_index)
+            length = traci.lane.getLength(lane)
+            for vehicle in traci.lane.getLastStepVehicleIDs(lane):
+                if length - traci.vehicle.getLanePosition(vehicle) <= detection_range:
+                    count += 1
+        queues.append(count)
+    return queues
+
+
+def light_state(lights):
+    """Controller lights -> SUMO state string, one character per link."""
+    return "".join("G" if light == GREEN else "y" if light == YELLOW else "r" for light in lights)
+
+
+def run(mode, use_gui=False, detection="camera", detection_range=DETECTION_RANGE_M):
     tripinfo_path = os.path.join(OUTPUTS_DIR, "sumo_tripinfo_{}.xml".format(mode))
     os.makedirs(OUTPUTS_DIR, exist_ok=True)
 
     sumo_binary = _find_sumo_binary("sumo-gui" if use_gui else "sumo")
-
     traci.start([
         sumo_binary, "-c", SUMOCFG_PATH,
         "--tripinfo-output", tripinfo_path,
         "--no-step-log", "true",
-        "--waiting-time-memory", "1000",
+        "--waiting-time-memory", "10000",
+        "--end", str(MAX_STEPS),
     ])
 
-    backlog = [0.0, 0.0, 0.0, 0.0]
-    cycles_waited = [0, 0, 0, 0]
-    cycle_log = []
-
-    def run_one_cycle(cycle_idx):
-        nonlocal backlog, cycles_waited
-
-        queue_counts = [
-            traci.edge.getLastStepHaltingNumber(LANE_APPROACH_EDGE[i]) for i in range(4)
-        ]
-
-        if mode == "adaptive":
-            # The halting count is a live measurement of the whole queue,
-            # so it already contains every vehicle left over from the
-            # previous cycle. Feeding the computed backlog back in as well
-            # would count those vehicles twice - only the aging state
-            # (cycles_waited) carries across cycles here.
-            plan, backlog, cycles_waited = compute_signal_plan(queue_counts, [0.0] * 4, cycles_waited)
-            greens = [p["green"] for p in plan]
-        else:
-            # naive fixed-timer baseline: same round-robin phase order,
-            # but every lane always gets the same green duration
-            greens = [FIXED_GREEN] * 4
-            backlog = [max(0.0, q - g * SATURATION_RATE) for q, g in zip(queue_counts, greens)]
-
-        cycle_log.append({"cycle": cycle_idx, "queue_counts": queue_counts, "greens": greens})
-
-        for lane_idx in range(4):
-            traci.trafficlight.setPhase(TLS_ID, LANE_GREEN_PHASE[lane_idx])
-            _advance(int(round(greens[lane_idx])))
-            traci.trafficlight.setPhase(TLS_ID, YELLOW_PHASE_FOR[lane_idx])
-            _advance(YELLOW_DURATION)
+    num_lanes = len(LANE_APPROACH_EDGE)
+    # North + South and East + West don't conflict (see the junction's
+    # foes matrix in intersection.net.xml), so both policies use two phases.
+    phases = two_phase_plan(num_lanes)
+    ctrl = AdaptiveController(num_lanes, phases) if mode == "adaptive" else FixedTimeController(num_lanes, phases)
+    queue_log = []
+    steps = 0
 
     try:
-        for cycle in range(NUM_CYCLES):
-            run_one_cycle(cycle)
-
-        # Keep running full signal cycles - under the SAME algorithm being
-        # tested - until (almost) every vehicle has actually completed its
-        # trip. Without this, any vehicle still queued when we stop never
-        # gets a tripinfo entry at all, so "average waiting time" would
-        # silently only reflect the lucky vehicles that finished in time -
-        # exactly backwards, since a worse policy leaves MORE stragglers.
-        drain_cycle = NUM_CYCLES
-        while traci.simulation.getMinExpectedNumber() > 0 and drain_cycle < NUM_CYCLES + MAX_DRAIN_CYCLES:
-            run_one_cycle(drain_cycle)
-            drain_cycle += 1
+        # Run until every vehicle has completed its trip - stopping early
+        # would drop the slowest (most-delayed) vehicles from the averages.
+        while traci.simulation.getMinExpectedNumber() > 0 and steps < MAX_STEPS:
+            queues = approach_queues(detection, detection_range)
+            lights = ctrl.update(STEP, queues)
+            # Setting the state directly keeps SUMO's own static program
+            # (fixed 30 s phases) from switching the light behind our back.
+            traci.trafficlight.setRedYellowGreenState(TLS_ID, light_state(lights))
+            traci.simulationStep()
+            if steps % QUEUE_SAMPLE_EVERY == 0:
+                queue_log.append({"t": steps, "queues": queues})
+            steps += 1
 
         remaining = traci.simulation.getMinExpectedNumber()
         if remaining > 0:
-            print("Warning: {} vehicles still in the network after {} drain cycles ({} mode) - "
-                  "network is oversaturated for this policy.".format(remaining, MAX_DRAIN_CYCLES, mode))
+            print("Warning: {} vehicles still in the network after {} s ({} mode).".format(
+                remaining, MAX_STEPS, mode))
     finally:
         traci.close()
 
     stats = _parse_tripinfo(tripinfo_path)
     stats["mode"] = mode
-    stats["cycle_log"] = cycle_log
+    stats["sim_seconds"] = steps
+    stats["green_phases"] = len(ctrl.phase_log)
+    stats["phase_log"] = ctrl.phase_log
+    stats["queue_log"] = queue_log
     return stats
 
 
@@ -145,13 +147,6 @@ def _find_sumo_binary(name):
         return found
     sys.exit("Could not find the '{}' binary. Install SUMO (e.g. `pip install eclipse-sumo`) "
              "or set SUMO_HOME.".format(name))
-
-
-def _advance(seconds):
-    for _ in range(seconds):
-        if traci.simulation.getMinExpectedNumber() <= 0:
-            break
-        traci.simulationStep()
 
 
 def _parse_tripinfo(path):

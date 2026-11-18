@@ -8,3 +8,7 @@ class TrackableObject:
 		# initialize a boolean used to indicate if the object has
 		# already been counted or not
 		self.counted = False
+		# footage frame numbers at which each centroid was seen, used to
+		# tell a parked vehicle (never moves) from a queued one
+		self.frames = []
+		self.parked = False

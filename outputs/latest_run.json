@@ -1,64 +1,171 @@
 {
-  "timestamp": 1790406517.961312,
+  "timestamp": 1794996430.254005,
+  "mode": "adaptive",
   "labels": [
-    "Lane 1",
-    "Lane 2",
-    "Lane 3",
-    "Lane 4"
+    "North",
+    "East",
+    "South",
+    "West"
   ],
-  "vehicle_counts": [
-    23,
-    41,
-    12,
-    26
-  ],
-  "emergency_flags": [
-    false,
-    false,
-    false,
-    false
-  ],
-  "plan": [
+  "sim_time": 56.96,
+  "phase_plan": [
     {
-      "count": 23,
-      "backlog_in": 0.0,
-      "demand": 23.0,
-      "green": 46.0,
-      "served": 23.0,
-      "leftover": 0.0,
-      "cycles_waited": 0,
-      "emergency": false
+      "name": "North + South",
+      "lanes": [
+        0,
+        2
+      ]
     },
     {
-      "count": 41,
-      "backlog_in": 11.0,
-      "demand": 52.0,
-      "green": 75,
-      "served": 37.5,
-      "leftover": 14.5,
-      "cycles_waited": 2,
-      "emergency": false
-    },
-    {
-      "count": 12,
-      "backlog_in": 0.0,
-      "demand": 12.0,
-      "green": 24.0,
-      "served": 12.0,
-      "leftover": 0.0,
-      "cycles_waited": 0,
-      "emergency": false
-    },
-    {
-      "count": 26,
-      "backlog_in": 0.0,
-      "demand": 26.0,
-      "green": 52.0,
-      "served": 26.0,
-      "leftover": 0.0,
-      "cycles_waited": 0,
-      "emergency": false
+      "name": "East + West",
+      "lanes": [
+        1,
+        3
+      ]
     }
   ],
-  "total_cycle_time": 197.0
+  "settings": {
+    "phasing": "two-phase",
+    "min_green": 10,
+    "max_green": 60,
+    "fixed_green": null,
+    "saturation_rate": 0.5,
+    "yellow": 3.5,
+    "all_red": 2.0,
+    "speed_limit_kmh": 50,
+    "intersection_width_m": 20,
+    "pedestrians": false
+  },
+  "lanes": [
+    {
+      "label": "North",
+      "video": "1.mp4",
+      "counted": 31,
+      "green_time": 20.0,
+      "phases": 2,
+      "avg_wait": 8.8,
+      "max_queue": 7,
+      "avg_queue": 2.8,
+      "road_lines": true
+    },
+    {
+      "label": "East",
+      "video": "2.mp4",
+      "counted": 31,
+      "green_time": 20.4,
+      "phases": 2,
+      "avg_wait": 16.5,
+      "max_queue": 7,
+      "avg_queue": 3.34,
+      "road_lines": true
+    },
+    {
+      "label": "South",
+      "video": "3.mp4",
+      "counted": 31,
+      "green_time": 20.0,
+      "phases": 2,
+      "avg_wait": 8.8,
+      "max_queue": 7,
+      "avg_queue": 2.8,
+      "road_lines": true
+    },
+    {
+      "label": "West",
+      "video": "4.mp4",
+      "counted": 31,
+      "green_time": 20.4,
+      "phases": 2,
+      "avg_wait": 16.5,
+      "max_queue": 7,
+      "avg_queue": 3.34,
+      "road_lines": true
+    }
+  ],
+  "phases": [
+    {
+      "phase": 0,
+      "lanes": [
+        0,
+        2
+      ],
+      "start": 0.03,
+      "queue_at_start": 2,
+      "lane_queues": [
+        2,
+        2
+      ],
+      "waited": 0.03,
+      "planned": 10,
+      "green": 10.01,
+      "end_reason": "max-out",
+      "choice": "priority",
+      "emergency": false,
+      "queue_at_end": 4,
+      "label": "North + South"
+    },
+    {
+      "phase": 1,
+      "lanes": [
+        1,
+        3
+      ],
+      "start": 15.55,
+      "queue_at_start": 2,
+      "lane_queues": [
+        2,
+        2
+      ],
+      "waited": 15.55,
+      "planned": 10,
+      "green": 10.01,
+      "end_reason": "max-out",
+      "choice": "priority",
+      "emergency": false,
+      "queue_at_end": 4,
+      "label": "East + West"
+    },
+    {
+      "phase": 0,
+      "lanes": [
+        0,
+        2
+      ],
+      "start": 31.06,
+      "queue_at_start": 4,
+      "lane_queues": [
+        4,
+        4
+      ],
+      "waited": 17.52,
+      "planned": 10,
+      "green": 10.01,
+      "end_reason": "max-out",
+      "choice": "priority",
+      "emergency": false,
+      "queue_at_end": 4,
+      "label": "North + South"
+    },
+    {
+      "phase": 1,
+      "lanes": [
+        1,
+        3
+      ],
+      "start": 46.58,
+      "queue_at_start": 4,
+      "lane_queues": [
+        4,
+        4
+      ],
+      "waited": 17.52,
+      "planned": 10,
+      "green": 10.38,
+      "end_reason": "cleared",
+      "choice": "priority",
+      "emergency": false,
+      "queue_at_end": 0,
+      "label": "East + West"
+    }
+  ]
 }

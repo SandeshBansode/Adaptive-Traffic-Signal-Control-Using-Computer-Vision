@@ -6,7 +6,7 @@ numpy
 scipy
 matplotlib
 pandas
-streamlit>=1.30
+streamlit>=1.50
 
 # SUMO validation (sumo_sim/traci_control.py)
 eclipse-sumo
